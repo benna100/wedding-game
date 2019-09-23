@@ -4,6 +4,8 @@ import preload from "./preload";
 import gameCreator from "./game-creator";
 import update from "./update";
 
+import menuController from "./menu-controller";
+
 import "./style/main.scss";
 
 const viewportWidth = Math.max(
@@ -16,10 +18,12 @@ const viewportHeight = Math.max(
     window.innerHeight || 0
 );
 
+window.playerConfiguration = {};
+
 const config = {
     type: Phaser.AUTO,
-    width: viewportWidth,
-    height: viewportHeight,
+    width: "100%",
+    height: "100%",
     parent: "game",
     physics: {
         default: "arcade",
@@ -38,15 +42,4 @@ const config = {
 
 window.game = new Phaser.Game(config);
 
-setTimeout(() => {
-    console.log(document.querySelector("section.menu"));
-}, 0);
-
-const menu = document.querySelector("section.menu");
-
-const startButton = document.querySelector("section.menu ul li button.start");
-
-document;
-startButton.addEventListener("click", () => {
-    menu.classList.add("hidden");
-});
+menuController();

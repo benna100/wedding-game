@@ -1,5 +1,5 @@
 {
-    "name": "",
+    "name": "wedding-game",
     "version": "2.0.0",
     "description": "",
     "main": "index.js",
@@ -19,7 +19,7 @@
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": ""
+        "url": "https://github.com/wedding-game"
     },
     "homepage": "https://github-username.github.io/your-repo-name/",
     "devDependencies": {
