@@ -19,6 +19,8 @@ const viewportHeight = Math.max(
 );
 
 window.playerConfiguration = {};
+window.catCounter = 0;
+window.cats = [];
 
 const config = {
     type: Phaser.AUTO,

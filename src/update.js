@@ -1,5 +1,3 @@
-let enemyDirection = "left";
-
 export default function update(time, delta) {
     this.parallaxMountainBg.tilePositionX =
         this.cameras.cameras[0].scrollX * 0.1;
@@ -66,39 +64,38 @@ export default function update(time, delta) {
         window.player.body.setVelocityY(-500);
     }
 
-    if (enemyDirection === "left") {
-        window.enemy.body.setVelocityX(-200);
-    } else if (enemyDirection === "right") {
-        window.enemy.body.setVelocityX(200);
-    }
+    window.cats.forEach(cat => {
+        // improve, remove from the cats array
+        if (cat.atlas.body) {
+            if (cat.direction === "left") {
+                cat.atlas.body.setVelocityX(-200);
+            } else if (cat.direction === "right") {
+                cat.atlas.body.setVelocityX(200);
+            }
 
-    const hasReachedLeftBorder = window.enemy.x < 10;
+            const hasReachedLeftBorder = cat.atlas.x < 10;
 
-    const isEnemyMovingToTheRight = window.enemy.body.velocity.x > 0;
+            const iscatMovingToTheRight = cat.atlas.body.velocity.x > 0;
 
-    // in front and down
-    const tileInFrontOfEnemy = window.groundLayer.getTileAtWorldXY(
-        isEnemyMovingToTheRight ? enemy.x + 10 : enemy.x - 10,
-        enemy.y + 10
-    );
+            // in front and down
+            const tileInFrontOfcat = window.groundLayer.getTileAtWorldXY(
+                iscatMovingToTheRight ? cat.atlas.x + 10 : cat.atlas.x - 10,
+                cat.atlas.y + 10
+            );
 
-    const hasReachedRightBorder =
-        window.enemy.x > window.groundLayer.width - 10;
-    if (
-        (hasReachedLeftBorder || !Boolean(tileInFrontOfEnemy)) &&
-        enemyDirection === "left"
-    ) {
-        enemyDirection = "right";
-    } else if (
-        (hasReachedRightBorder || !Boolean(tileInFrontOfEnemy)) &&
-        enemyDirection == "right"
-    ) {
-        enemyDirection = "left";
-    }
-
-    // if (!tileInFrontOfEnemy && enemyDirection === "left") {
-    //     enemyDirection = "right";
-    // } else if (!tileInFrontOfEnemy && enemyDirection == "right") {
-    //     enemyDirection = "left";
-    // }
+            const hasReachedRightBorder =
+                cat.atlas.x > window.groundLayer.width - 10;
+            if (
+                (hasReachedLeftBorder || !Boolean(tileInFrontOfcat)) &&
+                cat.direction === "left"
+            ) {
+                cat.direction = "right";
+            } else if (
+                (hasReachedRightBorder || !Boolean(tileInFrontOfcat)) &&
+                cat.direction == "right"
+            ) {
+                cat.direction = "left";
+            }
+        }
+    });
 }

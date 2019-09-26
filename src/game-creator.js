@@ -1,4 +1,5 @@
 import addParallax from "./parallax";
+import { LEFT } from "phaser";
 
 const viewportWidth = Math.max(
     document.documentElement.clientWidth,
@@ -10,12 +11,21 @@ const viewportHeight = Math.max(
     window.innerHeight || 0
 );
 
-// this function will be called when the player touches a coin
-function collectCoin(sprite, tile) {
-    window.coinLayer.removeTileAt(tile.x, tile.y); // remove the tile/coin
-    window.score = window.score + 1; // add 10 points to the score
-    // window.text.setText(window.score); // set the text to show the current score
-    return false;
+function addAtlas(scene, atlasKey, startPosition, size) {
+    // create the enemy sprite
+    const cat = scene.physics.add.sprite(
+        startPosition.x,
+        startPosition.y,
+        atlasKey
+    );
+
+    cat.setCollideWorldBounds(true); // don't go out of the map
+
+    // small fix to our cat images, we resize the physics body object slightly
+    cat.body.setSize(size.width, size.height);
+    cat.setDisplaySize(size.width, size.height);
+
+    return cat;
 }
 
 export default function create() {
@@ -32,8 +42,6 @@ export default function create() {
         0,
         0
     );
-
-    console.log(window.groundLayer);
 
     // the player will collide with this layer
     window.groundLayer.setCollisionByExclusion([-1]);
@@ -56,22 +64,32 @@ export default function create() {
     // small fix to our player images, we resize the physics body object slightly
     window.player.body.setSize(window.player.width, window.player.height - 8);
 
-    // create the enemy sprite
-    window.enemy = this.physics.add.sprite(600, 280, "enemy");
-    window.enemy.setCollideWorldBounds(true); // don't go out of the map
+    window.cats.push({
+        atlas: addAtlas(
+            this,
+            "enemy",
+            { x: 600, y: 280 },
+            { width: 100, height: 100 }
+        ),
+        direction: "left"
+    });
 
-    // small fix to our enemy images, we resize the physics body object slightly
-    window.enemy.body.setSize(100, 100 - 8);
-    window.enemy.setDisplaySize(100, 100);
+    window.cats.push({
+        atlas: addAtlas(
+            this,
+            "enemy",
+            { x: 1000, y: 280 },
+            { width: 100, height: 100 }
+        ),
+        direction: "left"
+    });
 
     // player will collide with the level tiles
     this.physics.add.collider(groundLayer, window.player);
-    this.physics.add.collider(groundLayer, window.enemy);
 
-    window.coinLayer.setTileIndexCallback(17, collectCoin, this);
-    // when the player overlaps with a tile with index 17, collectCoin
-    // will be called
-    this.physics.add.overlap(window.player, coinLayer);
+    window.cats.forEach(cat => {
+        this.physics.add.collider(groundLayer, cat.atlas);
+    });
 
     // player walk animation
     this.anims.create({
@@ -116,4 +134,15 @@ export default function create() {
     const fx = this.sound.add("po33-sound");
     fx.loop = true;
     // fx.play();
+
+    window.cats.forEach(cat => {
+        this.physics.add.overlap(window.player, cat.atlas, lol => {
+            // shoulde remove the overlapped cat from the window.cats array
+
+            cat.atlas.destroy();
+            window.catCounter++;
+            document.querySelector(".cat-counter p span").innerHTML =
+                window.catCounter;
+        });
+    });
 }
