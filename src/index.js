@@ -43,5 +43,6 @@ const config = {
 };
 
 window.game = new Phaser.Game(config);
+console.log(window.game);
 
 menuController();

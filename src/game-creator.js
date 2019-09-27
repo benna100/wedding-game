@@ -11,12 +11,12 @@ const viewportHeight = Math.max(
     window.innerHeight || 0
 );
 
-function addAtlas(scene, atlasKey, startPosition, size) {
+function addSprite(scene, spriteKey, startPosition, size) {
     // create the enemy sprite
     const cat = scene.physics.add.sprite(
         startPosition.x,
         startPosition.y,
-        atlasKey
+        spriteKey
     );
 
     cat.setCollideWorldBounds(true); // don't go out of the map
@@ -24,6 +24,7 @@ function addAtlas(scene, atlasKey, startPosition, size) {
     // small fix to our cat images, we resize the physics body object slightly
     cat.body.setSize(size.width, size.height);
     cat.setDisplaySize(size.width, size.height);
+    console.log(cat);
 
     return cat;
 }
@@ -65,30 +66,34 @@ export default function create() {
     window.player.body.setSize(window.player.width, window.player.height - 8);
 
     window.cats.push({
-        atlas: addAtlas(
+        sprite: addSprite(
             this,
             "enemy",
             { x: 600, y: 280 },
             { width: 100, height: 100 }
         ),
-        direction: "left"
+        direction: "left",
+        speed: Phaser.Math.Between(150, 200)
     });
 
     window.cats.push({
-        atlas: addAtlas(
+        sprite: addSprite(
             this,
             "enemy",
             { x: 1000, y: 280 },
             { width: 100, height: 100 }
         ),
-        direction: "left"
+        direction: "left",
+        speed: Phaser.Math.Between(150, 200)
     });
+
+    console.log(window.cats[0].sprite.body);
 
     // player will collide with the level tiles
     this.physics.add.collider(groundLayer, window.player);
 
     window.cats.forEach(cat => {
-        this.physics.add.collider(groundLayer, cat.atlas);
+        this.physics.add.collider(groundLayer, cat.sprite);
     });
 
     // player walk animation
@@ -134,15 +139,14 @@ export default function create() {
     const fx = this.sound.add("po33-sound");
     fx.loop = true;
     // fx.play();
-
+    const catCounter = document.querySelector(".cat-counter p span");
     window.cats.forEach(cat => {
-        this.physics.add.overlap(window.player, cat.atlas, lol => {
+        this.physics.add.overlap(window.player, cat.sprite, lol => {
             // shoulde remove the overlapped cat from the window.cats array
 
-            cat.atlas.destroy();
+            cat.sprite.destroy();
             window.catCounter++;
-            document.querySelector(".cat-counter p span").innerHTML =
-                window.catCounter;
+            catCounter.innerHTML = window.catCounter;
         });
     });
 }
