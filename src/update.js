@@ -1,3 +1,86 @@
+import Hammer from "hammerjs";
+
+const viewportWidth = Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth || 0
+);
+
+const viewportHeight = Math.max(
+    document.documentElement.clientHeight,
+    window.innerHeight || 0
+);
+
+const body = document.querySelector("body");
+
+body.addEventListener("touchstart", handleStart, false);
+body.addEventListener("touchend", handleEnd, false);
+
+let leftTouchDown = false;
+let rightTouchDown = false;
+
+function handleStart(evt) {
+    // evt.preventDefault();
+    console.log("touchstart.");
+    var touches = evt.changedTouches;
+    touches = Array.from(touches);
+    touches.forEach(touch => {
+        const tapAboveMiddle = touch.pageY < viewportHeight / 2;
+        const tapToLeftOfMiddle = touch.pageX < viewportWidth / 2;
+        const tapToRightOfMiddle = touch.pageX > viewportWidth / 2;
+
+        if (tapAboveMiddle) {
+            if (window.player.body.onFloor()) {
+                window.player.body.setVelocityY(-500);
+            }
+        } else if (tapToLeftOfMiddle) {
+            leftTouchDown = true;
+        } else if (tapToRightOfMiddle) {
+            rightTouchDown = true;
+        }
+    });
+}
+
+function handleEnd(evt) {
+    // evt.preventDefault();
+    var touches = evt.changedTouches;
+    touches = Array.from(touches);
+    touches.forEach(touch => {
+        const tapAboveMiddle = touch.pageY < viewportHeight / 2;
+        const tapToLeftOfMiddle = touch.pageX < viewportWidth / 2;
+        const tapToRightOfMiddle = touch.pageX > viewportWidth / 2;
+
+        if (tapAboveMiddle) {
+        } else if (tapToLeftOfMiddle) {
+            leftTouchDown = false;
+        } else if (tapToRightOfMiddle) {
+            rightTouchDown = false;
+        }
+    });
+}
+
+// var hammertime = new Hammer(body);
+// hammertime.on("press", function(ev) {
+//     console.log(ev.center);
+
+//     const tapAboveMiddle = ev.center.y < viewportHeight / 2;
+//     const tapToLeftOfMiddle = ev.center.x < viewportWidth / 2;
+//     const tapToRightOfMiddle = ev.center.x > viewportWidth / 2;
+
+//     if (tapAboveMiddle) {
+//         if (window.player.body.onFloor()) {
+//             console.log("jump");
+
+//             window.player.body.setVelocityY(-500);
+//         }
+//     } else if (tapToLeftOfMiddle) {
+//         console.log("left");
+//         window.player.body.setVelocityX(-200);
+//     } else if (tapToRightOfMiddle) {
+//         console.log("right");
+//         window.player.body.setVelocityX(200);
+//     }
+// });
+
 export default function update(time, delta) {
     this.parallaxMountainBg.tilePositionX =
         this.cameras.cameras[0].scrollX * 0.1;
@@ -9,11 +92,11 @@ export default function update(time, delta) {
     this.parallaxMountainForegroundTrees.tilePositionY =
         this.cameras.cameras[0].scrollY * 0.25;
 
-    if (window.cursors.left.isDown) {
+    if (window.cursors.left.isDown || leftTouchDown) {
         window.player.body.setVelocityX(-200);
         window.player.anims.play("walk", true); // walk left
         window.player.flipX = true; // flip the sprite to the left
-    } else if (window.cursors.right.isDown) {
+    } else if (window.cursors.right.isDown || rightTouchDown) {
         window.player.body.setVelocityX(200);
         window.player.anims.play("walk", true);
         window.player.flipX = false; // use the original sprite looking to the right

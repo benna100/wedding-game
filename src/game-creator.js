@@ -73,7 +73,7 @@ export default function create() {
             { width: 100, height: 100 }
         ),
         direction: "left",
-        speed: Phaser.Math.Between(150, 200)
+        speed: Phaser.Math.Between(150, 220)
     });
 
     window.cats.push({
@@ -84,7 +84,7 @@ export default function create() {
             { width: 100, height: 100 }
         ),
         direction: "left",
-        speed: Phaser.Math.Between(150, 200)
+        speed: Phaser.Math.Between(150, 220)
     });
 
     console.log(window.cats[0].sprite.body);
