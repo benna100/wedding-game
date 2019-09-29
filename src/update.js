@@ -24,7 +24,7 @@ function handleStart(evt) {
     var touches = evt.changedTouches;
     touches = Array.from(touches);
     touches.forEach(touch => {
-        const tapAboveMiddle = touch.pageY < viewportHeight / 2;
+        const tapAboveMiddle = touch.pageY < (viewportHeight / 100) * 66;
         const tapToLeftOfMiddle = touch.pageX < viewportWidth / 2;
         const tapToRightOfMiddle = touch.pageX > viewportWidth / 2;
 
