@@ -43,6 +43,20 @@ export default function create() {
         0,
         0
     );
+    let rotated = false;
+    window.groundLayer.setTileIndexCallback(
+        7,
+        function() {
+            if (!rotated) {
+                document.querySelector("body").classList.add("rotate");
+                rotated = true;
+            } else {
+                document.querySelector("body").classList.remove("rotate");
+                rotated = false;
+            }
+        },
+        this
+    );
 
     // the player will collide with this layer
     window.groundLayer.setCollisionByExclusion([-1]);

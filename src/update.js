@@ -1,5 +1,3 @@
-import Hammer from "hammerjs";
-
 const viewportWidth = Math.max(
     document.documentElement.clientWidth,
     window.innerWidth || 0
@@ -57,29 +55,6 @@ function handleEnd(evt) {
         }
     });
 }
-
-// var hammertime = new Hammer(body);
-// hammertime.on("press", function(ev) {
-//     console.log(ev.center);
-
-//     const tapAboveMiddle = ev.center.y < viewportHeight / 2;
-//     const tapToLeftOfMiddle = ev.center.x < viewportWidth / 2;
-//     const tapToRightOfMiddle = ev.center.x > viewportWidth / 2;
-
-//     if (tapAboveMiddle) {
-//         if (window.player.body.onFloor()) {
-//             console.log("jump");
-
-//             window.player.body.setVelocityY(-500);
-//         }
-//     } else if (tapToLeftOfMiddle) {
-//         console.log("left");
-//         window.player.body.setVelocityX(-200);
-//     } else if (tapToRightOfMiddle) {
-//         console.log("right");
-//         window.player.body.setVelocityX(200);
-//     }
-// });
 
 export default function update(time, delta) {
     this.parallaxMountainBg.tilePositionX =
