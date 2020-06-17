@@ -1,15 +1,19 @@
-import mapJson from "./assets/map.json";
+import mapJson from "./assets/map2.json";
 import tiles from "./assets/tiles.png";
 import goldcoin from "./assets/coinGold.png";
-import playerSprite from "./assets/player.png";
-import playerInfo from "./assets/player.json";
+
+import platformSprite from "./assets/platform.png";
+import amandaSprite from "./assets/characters/amanda-walking-sprite.png";
+import amandaInfo from "./assets/characters/amanda-walking-sprite.json";
+
 import backgroundPattern from "./assets/background-ground.png";
 import po33Sound from "./assets/po33.mp3";
 
 import enemySprite from "./assets/test.png";
 import enemyInfo from "./assets/test.json";
 
-import bg1 from "./assets/parallax/parallax-mountain-bg.png";
+// import bg1 from "./assets/parallax/parallax-mountain-bg.png";
+import bg1 from "./assets/parallax/test2.png";
 import bg3 from "./assets/parallax/parallax-mountain-foreground-trees.png";
 import bg2 from "./assets/parallax/parallax-mountain-mountains.png";
 
@@ -19,13 +23,13 @@ export default function preload() {
     // tiles in spritesheet
     this.load.spritesheet("tiles", tiles, {
         frameWidth: 70,
-        frameHeight: 70
+        frameHeight: 70,
     });
 
     // simple coin image
     this.load.image("coin", goldcoin);
 
-    this.load.atlas("player", playerSprite, playerInfo);
+    this.load.atlas("player", amandaSprite, amandaInfo);
     this.load.atlas("enemy", enemySprite, enemyInfo);
 
     // Loading parallax assets
@@ -34,6 +38,8 @@ export default function preload() {
     this.load.image("parallax-mountain-mountains", bg3);
 
     this.load.image("background-pattern", backgroundPattern);
+
+    this.load.image("platform", platformSprite);
 
     this.load.audio("po33-sound", po33Sound);
 

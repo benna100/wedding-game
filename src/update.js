@@ -21,7 +21,7 @@ function handleStart(evt) {
     console.log("touchstart.");
     var touches = evt.changedTouches;
     touches = Array.from(touches);
-    touches.forEach(touch => {
+    touches.forEach((touch) => {
         const tapAboveMiddle = touch.pageY < (viewportHeight / 100) * 66;
         const tapToLeftOfMiddle = touch.pageX < viewportWidth / 2;
         const tapToRightOfMiddle = touch.pageX > viewportWidth / 2;
@@ -42,7 +42,7 @@ function handleEnd(evt) {
     // evt.preventDefault();
     var touches = evt.changedTouches;
     touches = Array.from(touches);
-    touches.forEach(touch => {
+    touches.forEach((touch) => {
         const tapAboveMiddle = touch.pageY < viewportHeight / 2;
         const tapToLeftOfMiddle = touch.pageX < viewportWidth / 2;
         const tapToRightOfMiddle = touch.pageX > viewportWidth / 2;
@@ -93,11 +93,16 @@ export default function update(time, delta) {
     // }
 
     // jump
-    if (window.cursors.up.isDown && window.player.body.onFloor()) {
+
+    // todo: also make jumping possible on platforms
+    if (
+        window.cursors.up.isDown &&
+        (window.player.body.blocked.down || window.player.body.touching.down)
+    ) {
         window.player.body.setVelocityY(-500);
     }
 
-    window.cats.forEach(cat => {
+    window.cats.forEach((cat) => {
         // improve, remove from the cats array
         if (cat.sprite.body) {
             if (Phaser.Math.Between(0, 300) === 0) {
@@ -131,4 +136,6 @@ export default function update(time, delta) {
             }
         }
     });
+
+    // window.platform.setVelocityX(10);
 }

@@ -29,6 +29,22 @@ function addSprite(scene, spriteKey, startPosition, size) {
     return cat;
 }
 
+function addPlatform({ x, y, width, height, scene }) {
+    const platform = scene.physics.add.sprite(x, y, "platform");
+
+    platform
+        .setSize(width, height)
+        .setDisplaySize(width, height)
+        .setVelocityX(30)
+        .setBounce(1)
+        .setImmovable(true);
+
+    platform.body.allowGravity = false;
+    scene.physics.add.collider(player, platform);
+
+    return platform;
+}
+
 export default function create() {
     // load the map
     window.map = this.make.tilemap({ key: "map" });
@@ -46,7 +62,7 @@ export default function create() {
     let rotated = false;
     window.groundLayer.setTileIndexCallback(
         7,
-        function() {
+        function () {
             if (!rotated) {
                 document.querySelector("body").classList.add("rotate");
                 rotated = true;
@@ -67,17 +83,33 @@ export default function create() {
 
     addParallax(this);
 
-    // coin image used as tileset
-    const coinTiles = window.map.addTilesetImage("coin");
-    // add coins as tiles
-    window.coinLayer = window.map.createDynamicLayer("Coins", coinTiles, 0, 0);
-
     // create the player sprite
     window.player = this.physics.add.sprite(200, 200, "player");
+    window.player.setScale(2);
     window.player.setCollideWorldBounds(true); // don't go out of the map
 
-    // small fix to our player images, we resize the physics body object slightly
-    window.player.body.setSize(window.player.width, window.player.height - 8);
+    const platforms = [
+        { x: 1000, y: 300 },
+        { x: 1300, y: 200 },
+    ];
+
+    platforms.forEach((platform) =>
+        addPlatform({
+            x: platform.x,
+            y: platform.y,
+            width: 100,
+            height: 10,
+            scene: this,
+        })
+    );
+
+    // const platforms = this.physics.add.staticGroup();
+    // window.platform = platforms.create(50, 250, "platform");
+    // console.log(window.platform);
+
+    // this.physics.add.collider(player, platforms);
+
+    // window.platform.setVelocityX(10);
 
     window.cats.push({
         sprite: addSprite(
@@ -87,7 +119,7 @@ export default function create() {
             { width: 100, height: 100 }
         ),
         direction: "left",
-        speed: Phaser.Math.Between(150, 220)
+        speed: Phaser.Math.Between(150, 220),
     });
 
     window.cats.push({
@@ -98,15 +130,13 @@ export default function create() {
             { width: 100, height: 100 }
         ),
         direction: "left",
-        speed: Phaser.Math.Between(150, 220)
+        speed: Phaser.Math.Between(150, 220),
     });
-
-    console.log(window.cats[0].sprite.body);
 
     // player will collide with the level tiles
     this.physics.add.collider(groundLayer, window.player);
 
-    window.cats.forEach(cat => {
+    window.cats.forEach((cat) => {
         this.physics.add.collider(groundLayer, cat.sprite);
     });
 
@@ -114,25 +144,24 @@ export default function create() {
     this.anims.create({
         key: "walk",
         frames: this.anims.generateFrameNames("player", {
-            prefix: "p1_walk",
+            prefix: "amanda-walk-",
             start: 1,
-            end: 11,
-            zeroPad: 2
+            end: 2,
         }),
-        frameRate: 10,
-        repeat: -1
+        frameRate: 7,
+        repeat: -1,
     });
     // idle with only one frame, so repeat is not neaded
     this.anims.create({
         key: "idle",
-        frames: [{ key: "player", frame: "p1_stand" }],
-        frameRate: 10
+        frames: [{ key: "player", frame: "amanda-walk-01" }],
+        frameRate: 10,
     });
 
     this.anims.create({
         key: "idle",
         frames: [{ key: "enemy", frame: "mushroom" }],
-        frameRate: 1
+        frameRate: 1,
     });
 
     window.cursors = this.input.keyboard.createCursorKeys();
@@ -154,8 +183,8 @@ export default function create() {
     fx.loop = true;
     // fx.play();
     const catCounter = document.querySelector(".cat-counter p span");
-    window.cats.forEach(cat => {
-        this.physics.add.overlap(window.player, cat.sprite, lol => {
+    window.cats.forEach((cat) => {
+        this.physics.add.overlap(window.player, cat.sprite, (lol) => {
             // shoulde remove the overlapped cat from the window.cats array
 
             cat.sprite.destroy();

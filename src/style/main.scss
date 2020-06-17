@@ -137,13 +137,15 @@ section.screens {
                             background-size: cover;
                             border: 1px solid black;
                             background-color: transparent;
+                            image-rendering: pixelated;
 
                             &.mads {
-                                background-image: url("./../assets/mads.png");
+                                background-image: url("./../assets/characters/mads.png");
                             }
 
                             &.amanda {
-                                background-image: url("./../assets/amanda.png");
+                                background-image: url("./../assets/characters/amanda-walk-01.png");
+                                height: 170px;
                             }
                         }
                     }
