@@ -7,7 +7,7 @@ import amandaSprite from "./assets/characters/amanda-walking-sprite.png";
 import amandaInfo from "./assets/characters/amanda-walking-sprite.json";
 
 import backgroundPattern from "./assets/background-ground.png";
-import po33Sound from "./assets/po33.mp3";
+import po33Sound from "./assets/sound/side_a.mp3";
 
 import enemySprite from "./assets/test.png";
 import enemyInfo from "./assets/test.json";

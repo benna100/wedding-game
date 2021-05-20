@@ -1,11 +1,21 @@
-export default function(scene) {
-    const backgroundSizeForParallax = 600;
+const viewportWidth = Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth || 0
+);
+
+const viewportHeight = Math.max(
+    document.documentElement.clientHeight,
+    window.innerHeight || 0
+);
+
+export default function (scene) {
+    const backgroundSizeForParallax = 15 * 70;
 
     scene.parallaxMountainBg = scene.add.tileSprite(
         0,
         0,
-        scene.textures.list["parallax-mountain-bg"].source[0].width,
-        scene.textures.list["parallax-mountain-bg"].source[0].height,
+        viewportWidth,
+        viewportHeight,
         "parallax-mountain-bg"
     );
 
@@ -15,12 +25,13 @@ export default function(scene) {
     scene.parallaxMountainBg.depth = -1;
     scene.parallaxMountainBg.setScale(
         backgroundSizeForParallax /
-            scene.textures.list["parallax-mountain-bg"].source[0].height
+            scene.textures.list["parallax-mountain-bg"].source[0].height /
+            1.4
     );
 
     scene.parallaxMountainForegroundTrees = scene.add.tileSprite(
         0,
-        0,
+        400,
         scene.textures.list["parallax-mountain-foreground-trees"].source[0]
             .width,
         scene.textures.list["parallax-mountain-foreground-trees"].source[0]
@@ -35,6 +46,7 @@ export default function(scene) {
     scene.parallaxMountainForegroundTrees.setScale(
         backgroundSizeForParallax /
             scene.textures.list["parallax-mountain-foreground-trees"].source[0]
-                .height
+                .height /
+            2.3
     );
 }

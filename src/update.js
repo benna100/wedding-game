@@ -65,7 +65,7 @@ export default function update(time, delta) {
     this.parallaxMountainBg.tilePositionY =
         this.cameras.cameras[0].scrollY * 0.15;
     this.parallaxMountainForegroundTrees.tilePositionY =
-        this.cameras.cameras[0].scrollY * 0.25;
+        this.cameras.cameras[0].scrollY * 0.15;
 
     if (window.cursors.left.isDown || leftTouchDown) {
         window.player.body.setVelocityX(-200);
@@ -105,7 +105,7 @@ export default function update(time, delta) {
     window.cats.forEach((cat) => {
         // improve, remove from the cats array
         if (cat.sprite.body) {
-            if (Phaser.Math.Between(0, 300) === 0) {
+            if (Phaser.Math.Between(0, 1000) === 0) {
                 cat.sprite.body.setVelocityY(-200);
             }
 

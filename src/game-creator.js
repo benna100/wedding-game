@@ -24,7 +24,6 @@ function addSprite(scene, spriteKey, startPosition, size) {
     // small fix to our cat images, we resize the physics body object slightly
     cat.body.setSize(size.width, size.height);
     cat.setDisplaySize(size.width, size.height);
-    console.log(cat);
 
     return cat;
 }
@@ -85,23 +84,18 @@ export default function create() {
 
     // create the player sprite
     window.player = this.physics.add.sprite(200, 200, "player");
-    window.player.setScale(2);
+    window.player.setScale(1.5);
     window.player.setCollideWorldBounds(true); // don't go out of the map
 
-    const platforms = [
-        { x: 1000, y: 300 },
-        { x: 1300, y: 200 },
-    ];
-
-    platforms.forEach((platform) =>
-        addPlatform({
-            x: platform.x,
-            y: platform.y,
-            width: 100,
-            height: 10,
-            scene: this,
-        })
-    );
+    // for (let index = 0; index < 10; index++) {
+    //     addPlatform({
+    //         x: Phaser.Math.Between(0, 3600),
+    //         y: Phaser.Math.Between(50, 150),
+    //         width: Phaser.Math.Between(50, 400),
+    //         height: 20,
+    //         scene: this,
+    //     });
+    // }
 
     // const platforms = this.physics.add.staticGroup();
     // window.platform = platforms.create(50, 250, "platform");
@@ -111,27 +105,24 @@ export default function create() {
 
     // window.platform.setVelocityX(10);
 
-    window.cats.push({
-        sprite: addSprite(
-            this,
-            "enemy",
-            { x: 600, y: 280 },
-            { width: 100, height: 100 }
-        ),
-        direction: "left",
-        speed: Phaser.Math.Between(150, 220),
-    });
+    for (let i = 0; i < 15; i++) {
+        const x = Phaser.Math.Between(0, 3600);
+        const y = Phaser.Math.Between(0, 200);
 
-    window.cats.push({
-        sprite: addSprite(
-            this,
-            "enemy",
-            { x: 1000, y: 280 },
-            { width: 100, height: 100 }
-        ),
-        direction: "left",
-        speed: Phaser.Math.Between(150, 220),
-    });
+        window.cats.push({
+            sprite: addSprite(
+                this,
+                "enemy",
+                {
+                    x,
+                    y,
+                },
+                { width: 100, height: 100 }
+            ),
+            direction: "left",
+            speed: Phaser.Math.Between(150, 220),
+        });
+    }
 
     // player will collide with the level tiles
     this.physics.add.collider(groundLayer, window.player);
@@ -144,17 +135,18 @@ export default function create() {
     this.anims.create({
         key: "walk",
         frames: this.anims.generateFrameNames("player", {
-            prefix: "amanda-walk-",
+            prefix: "sprite",
             start: 1,
-            end: 2,
+            end: 3,
         }),
         frameRate: 7,
         repeat: -1,
     });
+
     // idle with only one frame, so repeat is not neaded
     this.anims.create({
         key: "idle",
-        frames: [{ key: "player", frame: "amanda-walk-01" }],
+        frames: [{ key: "player", frame: "amanda-walk-real-02" }],
         frameRate: 10,
     });
 
@@ -181,7 +173,7 @@ export default function create() {
 
     const fx = this.sound.add("po33-sound");
     fx.loop = true;
-    // fx.play();
+    fx.play();
     const catCounter = document.querySelector(".cat-counter p span");
     window.cats.forEach((cat) => {
         this.physics.add.overlap(window.player, cat.sprite, (lol) => {
