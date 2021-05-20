@@ -57,6 +57,12 @@ section.screens {
             }
 
             &.main-menu {
+                > p {
+                    position: absolute;
+                    top: calc(50% - 100px);
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
                 ul {
                     position: absolute;
                     top: 50%;

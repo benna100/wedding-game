@@ -186,9 +186,10 @@ export default function create() {
     // set background color, so the sky is not black
     this.cameras.main.setBackgroundColor("#c99869");
 
-    const fx = this.sound.add("po33-sound");
+    const fx = this.sound.add("po33-sound", { volume: 0.2 });
     fx.loop = true;
-    // fx.play();
+    fx.play();
+
     const catCounter = document.querySelector(".cat-counter p span");
     window.cats.forEach((cat) => {
         this.physics.add.overlap(window.player, cat.sprite, (lol) => {
