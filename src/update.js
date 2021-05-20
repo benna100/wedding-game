@@ -119,8 +119,8 @@ export default function update(time, delta) {
 
             // in front and down
             const tileInFrontOfcat = window.groundLayer.getTileAtWorldXY(
-                iscatMovingToTheRight ? cat.sprite.x + 10 : cat.sprite.x - 10,
-                cat.sprite.y + 10
+                iscatMovingToTheRight ? cat.sprite.x + 40 : cat.sprite.x - 40,
+                cat.sprite.y + 40
             );
 
             const isTileInFrontOfcat = Boolean(tileInFrontOfcat);

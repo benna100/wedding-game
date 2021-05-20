@@ -6,6 +6,9 @@ import platformSprite from "./assets/platform.png";
 import amandaSprite from "./assets/characters/amanda-walking-sprite.png";
 import amandaInfo from "./assets/characters/amanda-walking-sprite.json";
 
+import catSprite from "./assets/characters/cat-walking-sprite.png";
+import catInfo from "./assets/characters/cat-walking-sprite.json";
+
 import backgroundPattern from "./assets/background-ground.png";
 import po33Sound from "./assets/sound/side_a.mp3";
 
@@ -30,7 +33,7 @@ export default function preload() {
     this.load.image("coin", goldcoin);
 
     this.load.atlas("player", amandaSprite, amandaInfo);
-    this.load.atlas("enemy", enemySprite, enemyInfo);
+    this.load.atlas("enemy", catSprite, catInfo);
 
     // Loading parallax assets
     this.load.image("parallax-mountain-bg", bg1);

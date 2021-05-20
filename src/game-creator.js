@@ -117,7 +117,7 @@ export default function create() {
                     x,
                     y,
                 },
-                { width: 100, height: 100 }
+                { width: 51.5, height: 45.5 }
             ),
             direction: "left",
             speed: Phaser.Math.Between(150, 220),
@@ -156,6 +156,21 @@ export default function create() {
         frameRate: 1,
     });
 
+    this.anims.create({
+        key: "walk-cat",
+        frames: this.anims.generateFrameNames("enemy", {
+            prefix: "sprite",
+            start: 1,
+            end: 3,
+        }),
+        frameRate: 7,
+        repeat: -1,
+    });
+
+    window.cats.forEach((cat) => {
+        cat.sprite.anims.play("walk-cat", true);
+    });
+
     window.cursors = this.input.keyboard.createCursorKeys();
 
     // set bounds so the camera won't go outside the game world
@@ -173,7 +188,7 @@ export default function create() {
 
     const fx = this.sound.add("po33-sound");
     fx.loop = true;
-    fx.play();
+    // fx.play();
     const catCounter = document.querySelector(".cat-counter p span");
     window.cats.forEach((cat) => {
         this.physics.add.overlap(window.player, cat.sprite, (lol) => {
