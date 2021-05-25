@@ -21,29 +21,44 @@
     <body>
         <section id="game"></section>
         <div class="cat-counter">
-            <p>Caught cats: <span>0</span></p>
+            <p>Katte: <span>0</span></p>
         </div>
+        <div class="timer">0 sekunder</div>
         <section class="screens">
             <ul>
                 <li class="main-menu visible">
-                    <p>
-                        Skynd dig at fange alle kattene inden brylluppet
-                        starter!!!
-                    </p>
-                    <ul>
-                        <li>
-                            <button class="start active">Start</button>
-                        </li>
-                    </ul>
+                    <div class="container">
+                        <p>
+                            Skynd dig at fange alle kattene inden brylluppet
+                            starter!!!
+                        </p>
+                        <button class="start active">Start</button>
+                    </div>
                 </li>
                 <li class="select-character">
-                    <p>Select character</p>
+                    <p>Vælg en karakter</p>
                     <ul>
                         <li class="active"><button class="mads"></button></li>
-                        <li><button class="amanda"></button></li>
+                        <li><button class="player"></button></li>
                     </ul>
                 </li>
                 <li class="level-1-intro"></li>
+                <li class="success">
+                    <div class="container">
+                        <img
+                            src="src/assets/characters/success-image.png"
+                            alt=""
+                            srcset=""
+                        />
+                        <p>Din tid var <span class="time"></span> sekunder</p>
+                    </div>
+                </li>
+                <li class="you-died">
+                    <div class="container">
+                        <p>Åh nej du døde 😱</p>
+                        <button>Prøv igen</button>
+                    </div>
+                </li>
             </ul>
         </section>
     </body>

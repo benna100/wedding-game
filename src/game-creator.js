@@ -12,20 +12,20 @@ const viewportHeight = Math.max(
 );
 
 function addSprite(scene, spriteKey, startPosition, size) {
-    // create the enemy sprite
-    const cat = scene.physics.add.sprite(
+    // create the a sprite
+    const sprite = scene.physics.add.sprite(
         startPosition.x,
         startPosition.y,
         spriteKey
     );
 
-    cat.setCollideWorldBounds(true); // don't go out of the map
+    sprite.setCollideWorldBounds(true); // don't go out of the map
 
-    // small fix to our cat images, we resize the physics body object slightly
-    cat.body.setSize(size.width, size.height);
-    cat.setDisplaySize(size.width, size.height);
+    // small fix to our sprite images, we resize the physics body object slightly
+    sprite.body.setSize(size.width, size.height);
+    sprite.setDisplaySize(size.width, size.height);
 
-    return cat;
+    return sprite;
 }
 
 function addPlatform({ x, y, width, height, scene }) {
@@ -104,22 +104,42 @@ export default function create() {
     // this.physics.add.collider(player, platforms);
 
     // window.platform.setVelocityX(10);
-
-    for (let i = 0; i < 15; i++) {
+    const numberOfCats = 20;
+    for (let i = 0; i < numberOfCats; i++) {
         const x = Phaser.Math.Between(0, 3600);
         const y = Phaser.Math.Between(0, 200);
 
         window.cats.push({
             sprite: addSprite(
                 this,
-                "enemy",
+                "cat",
                 {
                     x,
                     y,
                 },
                 { width: 51.5, height: 45.5 }
             ),
-            direction: "left",
+            direction: Phaser.Math.Between(0, 1) === 0 ? "left" : "right",
+            speed: Phaser.Math.Between(150, 220),
+        });
+    }
+
+    const numberOfEvilCats = 5;
+    for (let i = 0; i < numberOfEvilCats; i++) {
+        const x = Phaser.Math.Between(0, 3600);
+        const y = Phaser.Math.Between(0, 200);
+
+        window.evilCats.push({
+            sprite: addSprite(
+                this,
+                "evil-cat",
+                {
+                    x,
+                    y,
+                },
+                { width: 51.5, height: 45.5 }
+            ),
+            direction: Phaser.Math.Between(0, 1) === 0 ? "left" : "right",
             speed: Phaser.Math.Between(150, 220),
         });
     }
@@ -131,13 +151,17 @@ export default function create() {
         this.physics.add.collider(groundLayer, cat.sprite);
     });
 
+    window.evilCats.forEach((evilCat) => {
+        this.physics.add.collider(groundLayer, evilCat.sprite);
+    });
+
     // player walk animation
     this.anims.create({
         key: "walk",
         frames: this.anims.generateFrameNames("player", {
             prefix: "sprite",
             start: 1,
-            end: 3,
+            end: window.playerConfiguration.player === "mads" ? 5 : 3,
         }),
         frameRate: 7,
         repeat: -1,
@@ -146,19 +170,19 @@ export default function create() {
     // idle with only one frame, so repeat is not neaded
     this.anims.create({
         key: "idle",
-        frames: [{ key: "player", frame: "amanda-walk-real-02" }],
+        frames: [{ key: "player", frame: "player-walk-real-02" }],
         frameRate: 10,
     });
 
     this.anims.create({
         key: "idle",
-        frames: [{ key: "enemy", frame: "mushroom" }],
+        frames: [{ key: "cat", frame: "mushroom" }],
         frameRate: 1,
     });
 
     this.anims.create({
         key: "walk-cat",
-        frames: this.anims.generateFrameNames("enemy", {
+        frames: this.anims.generateFrameNames("cat", {
             prefix: "sprite",
             start: 1,
             end: 3,
@@ -168,7 +192,26 @@ export default function create() {
     });
 
     window.cats.forEach((cat) => {
-        cat.sprite.anims.play("walk-cat", true);
+        try {
+            cat.sprite.anims.play("walk-cat", true);
+        } catch (error) {}
+    });
+
+    this.anims.create({
+        key: "walk-evil-cat",
+        frames: this.anims.generateFrameNames("evil-cat", {
+            prefix: "sprite",
+            start: 1,
+            end: 8,
+        }),
+        frameRate: 7,
+        repeat: -1,
+    });
+
+    window.evilCats.forEach((evilCat) => {
+        try {
+            evilCat.sprite.anims.play("walk-evil-cat", true);
+        } catch (error) {}
     });
 
     window.cursors = this.input.keyboard.createCursorKeys();
@@ -186,18 +229,81 @@ export default function create() {
     // set background color, so the sky is not black
     this.cameras.main.setBackgroundColor("#c99869");
 
-    const fx = this.sound.add("po33-sound", { volume: 0.2 });
-    fx.loop = true;
-    fx.play();
+    // const fx = this.sound.add("po33-sound", { volume: 0.2 });
+    // fx.loop = true;
+    // fx.play();
 
-    const catCounter = document.querySelector(".cat-counter p span");
+    const catCounterElement = document.querySelector(".cat-counter p span");
     window.cats.forEach((cat) => {
         this.physics.add.overlap(window.player, cat.sprite, (lol) => {
             // shoulde remove the overlapped cat from the window.cats array
 
             cat.sprite.destroy();
             window.catCounter++;
-            catCounter.innerHTML = window.catCounter;
+            catCounterElement.innerHTML = window.catCounter;
+
+            if (window.catCounter === numberOfCats) {
+                const screens = document.querySelectorAll(
+                    "section.screens ul li"
+                );
+                screens.forEach((screens) =>
+                    screens.classList.remove("visible")
+                );
+
+                document
+                    .querySelector(`section.screens ul li.success`)
+                    .classList.add("visible");
+
+                clearInterval(window.interval);
+                document.querySelector(
+                    ".success .time"
+                ).innerHTML = `${window.secondsElapsed} sekunder`;
+            }
+        });
+    });
+
+    let once = false;
+    window.evilCats.forEach((evilCat) => {
+        this.physics.add.overlap(window.player, evilCat.sprite, (lol) => {
+            // shoulde remove the overlapped evilCat from the window.cats array
+            // all aboard the badpractice train choo choo 🚂☁☁☁☁☁☁☁
+            const that = this;
+            // window.location.reload();
+            // this.registry.destroy();
+            // this.events.off();
+            if (!once) {
+                const screens = document.querySelectorAll(
+                    "section.screens ul li"
+                );
+                screens.forEach((screens) =>
+                    screens.classList.remove("visible")
+                );
+
+                document
+                    .querySelector(`section.screens ul li.you-died`)
+                    .classList.add("visible");
+                that.scene.stop();
+
+                document
+                    .querySelector("li.you-died button")
+                    .addEventListener("click", () => {
+                        console.log("clicked");
+                        that.scene.restart();
+                        window.catCounter = 0;
+                        window.secondsElapsed = 0;
+
+                        screens.forEach((screens) =>
+                            screens.classList.remove("visible")
+                        );
+
+                        console.log(
+                            document.querySelector(
+                                `section.screens ul li.level-1-intro`
+                            )
+                        );
+                    });
+                once = true;
+            }
         });
     });
 }

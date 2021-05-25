@@ -18,7 +18,6 @@ let rightTouchDown = false;
 
 function handleStart(evt) {
     // evt.preventDefault();
-    console.log("touchstart.");
     var touches = evt.changedTouches;
     touches = Array.from(touches);
     touches.forEach((touch) => {
@@ -68,11 +67,11 @@ export default function update(time, delta) {
         this.cameras.cameras[0].scrollY * 0.15;
 
     if (window.cursors.left.isDown || leftTouchDown) {
-        window.player.body.setVelocityX(-200);
+        window.player.body.setVelocityX(-400);
         window.player.anims.play("walk", true); // walk left
         window.player.flipX = true; // flip the sprite to the left
     } else if (window.cursors.right.isDown || rightTouchDown) {
-        window.player.body.setVelocityX(200);
+        window.player.body.setVelocityX(400);
         window.player.anims.play("walk", true);
         window.player.flipX = false; // use the original sprite looking to the right
     } else {
@@ -84,7 +83,7 @@ export default function update(time, delta) {
     //     const bullet = this.physics.add.sprite(
     //         window.player.body.center.x,
     //         window.player.body.center.y,
-    //         "enemy"
+    //         "cat"
     //     );
     //     bullet.setDisplaySize(10, 10);
 
@@ -105,8 +104,8 @@ export default function update(time, delta) {
     window.cats.forEach((cat) => {
         // improve, remove from the cats array
         if (cat.sprite.body) {
-            if (Phaser.Math.Between(0, 1000) === 0) {
-                cat.sprite.body.setVelocityY(-200);
+            if (Phaser.Math.Between(0, 100) === 0) {
+                cat.sprite.body.setVelocityY(Phaser.Math.Between(-400, -800));
             }
 
             if (cat.direction === "left") {
@@ -132,6 +131,45 @@ export default function update(time, delta) {
                     const inverseDirection =
                         cat.direction === "right" ? "left" : "right";
                     cat.direction = inverseDirection;
+                }
+            }
+        }
+    });
+
+    window.evilCats.forEach((evilCat) => {
+        // improve, remove from the cats array
+        if (evilCat.sprite.body) {
+            if (Phaser.Math.Between(0, 100) === 0) {
+                evilCat.sprite.body.setVelocityY(
+                    Phaser.Math.Between(-400, -800)
+                );
+            }
+
+            if (evilCat.direction === "left") {
+                evilCat.sprite.body.setVelocityX(-evilCat.speed);
+            } else if (evilCat.direction === "right") {
+                evilCat.sprite.body.setVelocityX(evilCat.speed);
+            }
+
+            const iscatMovingToTheRight = evilCat.sprite.body.velocity.x > 0;
+
+            // in front and down
+            const tileInFrontOfcat = window.groundLayer.getTileAtWorldXY(
+                iscatMovingToTheRight
+                    ? evilCat.sprite.x + 40
+                    : evilCat.sprite.x - 40,
+                evilCat.sprite.y + 40
+            );
+
+            const isTileInFrontOfcat = Boolean(tileInFrontOfcat);
+
+            const isCatJumping = !evilCat.sprite.body.onFloor();
+
+            if (!isCatJumping) {
+                if (evilCat.sprite.body.onWall() || !isTileInFrontOfcat) {
+                    const inverseDirection =
+                        evilCat.direction === "right" ? "left" : "right";
+                    evilCat.direction = inverseDirection;
                 }
             }
         }

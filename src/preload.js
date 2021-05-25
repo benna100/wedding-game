@@ -3,17 +3,21 @@ import tiles from "./assets/tiles.png";
 import goldcoin from "./assets/coinGold.png";
 
 import platformSprite from "./assets/platform.png";
+
 import amandaSprite from "./assets/characters/amanda-walking-sprite.png";
 import amandaInfo from "./assets/characters/amanda-walking-sprite.json";
+
+import madsSprite from "./assets/characters/mads-walking-sprite.png";
+import madsInfo from "./assets/characters/mads-walking-sprite.json";
 
 import catSprite from "./assets/characters/cat-walking-sprite.png";
 import catInfo from "./assets/characters/cat-walking-sprite.json";
 
-import backgroundPattern from "./assets/background-ground.png";
-import po33Sound from "./assets/sound/side_a.mp3";
+import evilCatSprite from "./assets/characters/evil-cat-walking-sprite.png";
+import evilCatInfo from "./assets/characters/evil-cat-walking.json";
 
-import enemySprite from "./assets/test.png";
-import enemyInfo from "./assets/test.json";
+import backgroundPattern from "./assets/background-ground.png";
+// import po33Sound from "./assets/sound/side_a.mp3";
 
 // import bg1 from "./assets/parallax/parallax-mountain-bg.png";
 import bg1 from "./assets/parallax/test2.png";
@@ -32,8 +36,17 @@ export default function preload() {
     // simple coin image
     this.load.image("coin", goldcoin);
 
-    this.load.atlas("player", amandaSprite, amandaInfo);
-    this.load.atlas("enemy", catSprite, catInfo);
+    this.load.atlas(
+        "player",
+        window.playerConfiguration.player === "mads"
+            ? madsSprite
+            : amandaSprite,
+        window.playerConfiguration.player === "mads" ? madsInfo : amandaInfo
+    );
+
+    this.load.atlas("cat", catSprite, catInfo);
+
+    this.load.atlas("evil-cat", evilCatSprite, evilCatInfo);
 
     // Loading parallax assets
     this.load.image("parallax-mountain-bg", bg1);
@@ -44,7 +57,7 @@ export default function preload() {
 
     this.load.image("platform", platformSprite);
 
-    this.load.audio("po33-sound", po33Sound);
+    // this.load.audio("po33-sound", po33Sound);
 
     window.game.scale.scaleMode = this.scale.RESIZE;
 }

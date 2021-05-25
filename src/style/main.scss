@@ -23,6 +23,14 @@ body {
     color: white;
 }
 
+.timer {
+    position: absolute;
+    top: 66px;
+    right: 24px;
+    font-size: 2rem;
+    color: white;
+}
+
 p {
     // no select
     -webkit-touch-callout: none; /* iOS Safari */
@@ -57,53 +65,54 @@ section.screens {
             }
 
             &.main-menu {
-                > p {
-                    position: absolute;
-                    top: calc(50% - 100px);
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                }
-                ul {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    list-style-type: none;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                > .container {
                     display: flex;
                     align-items: center;
+                    justify-content: center;
                     flex-direction: column;
 
-                    li {
-                        button {
-                            background: #df8f8f;
-                            padding: 10px 20px 7px 20px;
-                            border: none;
-                            padding: 12px 24px;
-                            border-bottom: 6px solid #8f585b;
-                            box-shadow: rgba(0, 0, 0, 0.1) 4px 4px 0;
-                            color: white;
-                            transition: transform 0.3s, box-shadow 0.3s,
-                                background 0.3s, border 0.3s;
+                    > p {
+                        font-weight: bold;
+                        font-size: 1.8rem;
+                        margin-bottom: 24px;
+                        max-width: 300px;
+                        text-align: center;
+                        line-height: 2.3rem;
+                    }
 
-                            &.active,
-                            &:hover {
-                                background: #e14242;
-                                border-bottom: 6px solid #952025;
-                                box-shadow: rgba(0, 0, 0, 0.1) 4px 6px 0;
-                                transform: translateY(-2px);
-                                cursor: pointer;
-                            }
+                    button {
+                        background: #df8f8f;
+                        padding: 10px 20px 7px 20px;
+                        border: none;
+                        padding: 12px 24px;
+                        border-bottom: 6px solid #8f585b;
+                        box-shadow: rgba(0, 0, 0, 0.1) 4px 4px 0;
+                        color: white;
+                        transition: transform 0.3s, box-shadow 0.3s,
+                            background 0.3s, border 0.3s;
 
-                            &:active {
-                                transform: translateY(1px);
-                                box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
-                                    0 3px 7px -3px rgba(0, 0, 0, 0.3);
-                            }
+                        &.active,
+                        &:hover {
+                            background: #e14242;
+                            border-bottom: 6px solid #952025;
+                            box-shadow: rgba(0, 0, 0, 0.1) 4px 6px 0;
+                            transform: translateY(-2px);
+                            cursor: pointer;
                         }
 
-                        &:not(:last-child) {
-                            margin-bottom: 24px;
+                        &:active {
+                            transform: translateY(1px);
+                            box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
+                                0 3px 7px -3px rgba(0, 0, 0, 0.3);
                         }
+                    }
+
+                    &:not(:last-child) {
+                        margin-bottom: 24px;
                     }
                 }
             }
@@ -131,6 +140,11 @@ section.screens {
                         &.active,
                         &:hover {
                             border: solid #e14242 5px;
+
+                            .player {
+                                background-image: url("./../assets/characters/amanda-walking.gif");
+                                background-color: black;
+                            }
                         }
 
                         &:not(:last-of-type) {
@@ -141,7 +155,7 @@ section.screens {
                             width: 150px;
                             height: 200px;
                             background-size: cover;
-                            border: 1px solid black;
+                            border: none;
                             background-color: transparent;
                             image-rendering: pixelated;
 
@@ -149,10 +163,84 @@ section.screens {
                                 background-image: url("./../assets/characters/mads.png");
                             }
 
-                            &.amanda {
-                                background-image: url("./../assets/characters/amanda-walk-01.png");
-                                height: 170px;
+                            &.player {
+                                background-image: url("./../assets/characters/amanda-static.png");
+                                height: 200px;
                             }
+                        }
+                    }
+                }
+            }
+
+            &.success {
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+
+                .container {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    img {
+                        max-width: 300px;
+                        margin-bottom: 24px;
+                        box-shadow: rgba(51, 51, 53, 0.2) 0px 2px 10px 5px;
+                    }
+
+                    p {
+                        margin-bottom: 24px;
+                        font-size: 2rem;
+                        font-weight: bold;
+                        text-align: center;
+                        line-height: 2.5rem;
+                        max-width: 300px;
+                    }
+                }
+            }
+
+            &.you-died {
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                > .container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+
+                    p {
+                        width: 100%;
+                        font-size: 2rem;
+                        text-align: center;
+                        margin-bottom: 24px;
+                    }
+
+                    button {
+                        background: #df8f8f;
+                        padding: 10px 20px 7px 20px;
+                        border: none;
+                        padding: 12px 24px;
+                        border-bottom: 6px solid #8f585b;
+                        box-shadow: rgba(0, 0, 0, 0.1) 4px 4px 0;
+                        color: white;
+                        transition: transform 0.3s, box-shadow 0.3s,
+                            background 0.3s, border 0.3s;
+
+                        &.active,
+                        &:hover {
+                            background: #e14242;
+                            border-bottom: 6px solid #952025;
+                            box-shadow: rgba(0, 0, 0, 0.1) 4px 6px 0;
+                            transform: translateY(-2px);
+                            cursor: pointer;
+                        }
+
+                        &:active {
+                            transform: translateY(1px);
+                            box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
+                                0 3px 7px -3px rgba(0, 0, 0, 0.3);
                         }
                     }
                 }
