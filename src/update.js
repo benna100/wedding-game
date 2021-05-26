@@ -10,50 +10,71 @@ const viewportHeight = Math.max(
 
 const body = document.querySelector("body");
 
-body.addEventListener("touchstart", handleStart, false);
-body.addEventListener("touchend", handleEnd, false);
-
 let leftTouchDown = false;
 let rightTouchDown = false;
 
-function handleStart(evt) {
-    // evt.preventDefault();
-    var touches = evt.changedTouches;
-    touches = Array.from(touches);
-    touches.forEach((touch) => {
-        const tapAboveMiddle = touch.pageY < (viewportHeight / 100) * 66;
-        const tapToLeftOfMiddle = touch.pageX < viewportWidth / 2;
-        const tapToRightOfMiddle = touch.pageX > viewportWidth / 2;
+const left = document.querySelector(".left");
+const right = document.querySelector(".right");
+const jump = document.querySelector(".jump");
 
-        if (tapAboveMiddle) {
+function attachMobileTouch() {
+    const body = document.querySelector("body");
+
+    body.addEventListener("touchstart", handleStart, false);
+    body.addEventListener("touchend", handleEnd, false);
+
+    function getKeyCodeFromTouchEvent(touchEvent, isTouchStart) {
+        const jumpTab =
+            touchEvent.pageY > viewportHeight - 200 &&
+            touchEvent.pageX > (viewportWidth / 3) * 2;
+        const leftTab =
+            touchEvent.pageY > viewportHeight - 200 &&
+            touchEvent.pageX < viewportWidth / 3;
+        const rightTab =
+            touchEvent.pageY > viewportHeight - 200 &&
+            touchEvent.pageX > viewportWidth / 3 &&
+            touchEvent.pageX < (viewportWidth / 3) * 2;
+
+        if (jumpTab) {
             if (window.player.body.onFloor()) {
                 window.player.body.setVelocityY(-500);
             }
-        } else if (tapToLeftOfMiddle) {
-            leftTouchDown = true;
-        } else if (tapToRightOfMiddle) {
-            rightTouchDown = true;
+
+            isTouchStart
+                ? jump.classList.add("active")
+                : jump.classList.remove("active");
+        } else if (leftTab) {
+            leftTouchDown = isTouchStart;
+            isTouchStart
+                ? left.classList.add("active")
+                : left.classList.remove("active");
+        } else if (rightTab) {
+            rightTouchDown = isTouchStart;
+            isTouchStart
+                ? right.classList.add("active")
+                : right.classList.remove("active");
         }
-    });
+    }
+
+    function handleStart(evt) {
+        var touches = evt.changedTouches;
+        touches = Array.from(touches);
+        touches.forEach((touch) => {
+            const keyCode = getKeyCodeFromTouchEvent(touch, true);
+        });
+    }
+
+    function handleEnd(evt) {
+        // evt.preventDefault();
+        var touches = evt.changedTouches;
+        touches = Array.from(touches);
+        touches.forEach((touch) => {
+            const keyCode = getKeyCodeFromTouchEvent(touch, false);
+        });
+    }
 }
 
-function handleEnd(evt) {
-    // evt.preventDefault();
-    var touches = evt.changedTouches;
-    touches = Array.from(touches);
-    touches.forEach((touch) => {
-        const tapAboveMiddle = touch.pageY < viewportHeight / 2;
-        const tapToLeftOfMiddle = touch.pageX < viewportWidth / 2;
-        const tapToRightOfMiddle = touch.pageX > viewportWidth / 2;
-
-        if (tapAboveMiddle) {
-        } else if (tapToLeftOfMiddle) {
-            leftTouchDown = false;
-        } else if (tapToRightOfMiddle) {
-            rightTouchDown = false;
-        }
-    });
-}
+attachMobileTouch();
 
 export default function update(time, delta) {
     this.parallaxMountainBg.tilePositionX =
@@ -65,13 +86,15 @@ export default function update(time, delta) {
         this.cameras.cameras[0].scrollY * 0.15;
     this.parallaxMountainForegroundTrees.tilePositionY =
         this.cameras.cameras[0].scrollY * 0.15;
-
+    // console.log(window.player.body);
+    const speed = window.playerConfiguration.player === "mads" ? 350 : 400;
     if (window.cursors.left.isDown || leftTouchDown) {
-        window.player.body.setVelocityX(-400);
+        // setFriction setDrag
+        window.player.body.setVelocityX(-speed);
         window.player.anims.play("walk", true); // walk left
         window.player.flipX = true; // flip the sprite to the left
     } else if (window.cursors.right.isDown || rightTouchDown) {
-        window.player.body.setVelocityX(400);
+        window.player.body.setVelocityX(speed);
         window.player.anims.play("walk", true);
         window.player.flipX = false; // use the original sprite looking to the right
     } else {
@@ -79,26 +102,15 @@ export default function update(time, delta) {
         window.player.anims.play("idle", true);
     }
 
-    // if (window.cursors.space.isDown) {
-    //     const bullet = this.physics.add.sprite(
-    //         window.player.body.center.x,
-    //         window.player.body.center.y,
-    //         "cat"
-    //     );
-    //     bullet.setDisplaySize(10, 10);
-
-    //     bullet.body.setVelocityX(window.player.flipX ? -600 : 600);
-    //     bullet.body.setVelocityY(-200);
-    // }
-
     // jump
 
     // todo: also make jumping possible on platforms
+    const jumpHeight = window.playerConfiguration.player === "mads" ? 600 : 500;
     if (
         window.cursors.up.isDown &&
         (window.player.body.blocked.down || window.player.body.touching.down)
     ) {
-        window.player.body.setVelocityY(-500);
+        window.player.body.setVelocityY(-jumpHeight);
     }
 
     window.cats.forEach((cat) => {

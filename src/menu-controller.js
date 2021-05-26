@@ -57,6 +57,8 @@ export default function () {
         "section.screens > ul > li.select-character ul > li"
     );
 
+    window.controlsElement = document.querySelector("section.controls");
+
     document.onkeydown = checkKey;
 
     let characterSelectIndex = 0;
@@ -97,6 +99,8 @@ export default function () {
             if (selectCharacter.classList.contains("visible")) {
                 showScreen("game");
 
+                window.controlsElement.classList.add("visible");
+
                 if (characterSelectIndex === 0) {
                     window.playerConfiguration.player = "mads";
                 } else if (characterSelectIndex === 1) {
@@ -136,7 +140,7 @@ export default function () {
     selectCharacterButtons.forEach((characterButton) => {
         characterButton.addEventListener("click", (evt) => {
             showScreen("game");
-            console.log(evt.target.classList);
+            window.controlsElement.classList.add("visible");
 
             if ([...evt.target.classList].indexOf("mads") >= 0) {
                 window.playerConfiguration.player = "mads";
@@ -148,10 +152,13 @@ export default function () {
 
             window.secondsElapsed = 0;
             const timerElement = document.querySelector(".timer");
-            window.interval = setInterval(() => {
-                window.secondsElapsed++;
-                timerElement.innerHTML = `${window.secondsElapsed} sekunder`;
-            }, 1000);
+
+            try {
+                window.interval = setInterval(() => {
+                    window.secondsElapsed++;
+                    timerElement.innerHTML = `${window.secondsElapsed} sekunder`;
+                }, 1000);
+            } catch (error) {}
         });
     });
 }

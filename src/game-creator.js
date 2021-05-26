@@ -84,26 +84,12 @@ export default function create() {
 
     // create the player sprite
     window.player = this.physics.add.sprite(200, 200, "player");
-    window.player.setScale(1.5);
+
+    window.playerConfiguration.player === "mads"
+        ? window.player.setScale(1.6)
+        : window.player.setScale(1.3);
     window.player.setCollideWorldBounds(true); // don't go out of the map
 
-    // for (let index = 0; index < 10; index++) {
-    //     addPlatform({
-    //         x: Phaser.Math.Between(0, 3600),
-    //         y: Phaser.Math.Between(50, 150),
-    //         width: Phaser.Math.Between(50, 400),
-    //         height: 20,
-    //         scene: this,
-    //     });
-    // }
-
-    // const platforms = this.physics.add.staticGroup();
-    // window.platform = platforms.create(50, 250, "platform");
-    // console.log(window.platform);
-
-    // this.physics.add.collider(player, platforms);
-
-    // window.platform.setVelocityX(10);
     const numberOfCats = 20;
     for (let i = 0; i < numberOfCats; i++) {
         const x = Phaser.Math.Between(0, 3600);
@@ -254,6 +240,8 @@ export default function create() {
                     .querySelector(`section.screens ul li.success`)
                     .classList.add("visible");
 
+                window.controlsElement.classList.remove("visible");
+
                 clearInterval(window.interval);
                 document.querySelector(
                     ".success .time"
@@ -283,6 +271,7 @@ export default function create() {
                     .querySelector(`section.screens ul li.you-died`)
                     .classList.add("visible");
                 that.scene.stop();
+                window.controlsElement.classList.remove("visible");
 
                 document
                     .querySelector("li.you-died button")
@@ -295,6 +284,8 @@ export default function create() {
                         screens.forEach((screens) =>
                             screens.classList.remove("visible")
                         );
+
+                        window.controlsElement.classList.add("visible");
 
                         console.log(
                             document.querySelector(
