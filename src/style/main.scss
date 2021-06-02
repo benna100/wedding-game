@@ -9,6 +9,7 @@ body {
     position: relative;
     font-family: Open Sans, sans-serif;
     transition: transform 0.3s;
+    min-height: calc(100vh - 100px);
 
     &.rotate {
         transform: rotate(180deg);
@@ -48,10 +49,15 @@ section.loader {
 
 section.screens {
     width: 100%;
+
     height: 100vh;
     position: absolute;
     left: 0;
     top: 0;
+
+    @media only screen and (max-device-width: 700px) {
+        height: calc(100vh - 50px);
+    }
 
     > ul {
         list-style-type: none;
@@ -160,7 +166,10 @@ section.screens {
 
                             .player {
                                 background-image: url("./../assets/characters/amanda-walking.gif");
-                                background-color: black;
+                            }
+
+                            .mads {
+                                background-image: url("./../assets/characters/mads-walking.gif");
                             }
                         }
 
@@ -171,18 +180,24 @@ section.screens {
                         button {
                             width: 150px;
                             height: 200px;
-                            background-size: cover;
                             border: none;
                             background-color: transparent;
                             image-rendering: pixelated;
 
+                            background-size: contain;
+                            background-repeat: no-repeat;
+
+                            @media only screen and (max-device-width: 700px) {
+                                width: 120px;
+                            }
+
                             &.mads {
-                                background-image: url("./../assets/characters/mads.png");
+                                background-image: url("./../assets/characters/mads-static.png");
+                                // height: 211px;
                             }
 
                             &.player {
                                 background-image: url("./../assets/characters/amanda-static.png");
-                                height: 200px;
                             }
                         }
                     }
@@ -274,7 +289,7 @@ section.controls {
     }
 
     ul.controls {
-        height: 100px;
+        height: 80px;
         position: fixed;
         bottom: 0px;
         left: 0px;

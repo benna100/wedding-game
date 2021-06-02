@@ -157,7 +157,6 @@ function showScreen(screenId) {
 
 function startGame(isMads) {
     showScreen("game");
-    window.controlsElement.classList.add("visible");
 
     if (isMads) {
         window.playerConfiguration.player = "mads";

@@ -220,6 +220,7 @@ export default function create() {
     this.cameras.main.setBackgroundColor("#c99869");
 
     if (!window.playing) {
+        console.log(`po33-sound${Phaser.Math.Between(1, 4)}`);
         const fx = this.sound.add(`po33-sound${Phaser.Math.Between(1, 4)}`, {
             volume: 0.2,
         });

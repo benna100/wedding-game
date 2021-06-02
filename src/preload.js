@@ -40,6 +40,8 @@ export default function preload() {
         document.querySelector("section.loader").style.display = "none";
         document.querySelector("section.screens").style.display = "block";
         window.secondsElapsed = 0;
+
+        window.controlsElement.classList.add("visible");
     });
 
     // simple coin image
