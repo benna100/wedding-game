@@ -23,6 +23,7 @@
                 top: 0;
                 background-color: white;
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
             }
@@ -110,6 +111,15 @@
                     transform: rotate(360deg);
                 }
             }
+
+            .loading {
+                margin-top: 24px;
+                display: none;
+            }
+
+            .loading.visible {
+                display: block;
+            }
         </style>
 
         <!-- Primary Meta Tags -->
@@ -128,6 +138,8 @@
                 <div></div>
                 <div></div>
             </div>
+
+            <p class="loading">Getting the cats ready!</p>
         </section>
         <section id="game"></section>
         <div class="cat-counter">
@@ -143,6 +155,11 @@
                             starter!!!
                         </p>
                         <button class="start active">Start</button>
+                        <img
+                            class="headphone"
+                            src="src/assets/headphone.svg"
+                            alt="headphone"
+                        />
                     </div>
                 </li>
                 <li class="select-character">

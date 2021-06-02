@@ -85,7 +85,8 @@ export default function update(time, delta) {
     this.parallaxMountainBg.tilePositionY =
         this.cameras.cameras[0].scrollY * 0.15;
     this.parallaxMountainForegroundTrees.tilePositionY =
-        this.cameras.cameras[0].scrollY * 0.15;
+        this.cameras.cameras[0].scrollY * 0.2;
+
     // console.log(window.player.body);
     const speed = window.playerConfiguration.player === "mads" ? 350 : 400;
     if (window.cursors.left.isDown || leftTouchDown) {

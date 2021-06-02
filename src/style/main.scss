@@ -118,6 +118,19 @@ section.screens {
                     &:not(:last-child) {
                         margin-bottom: 24px;
                     }
+
+                    img.headphone {
+                        width: 50px;
+                        position: absolute;
+                        right: 12px;
+                        bottom: 12px;
+                        cursor: pointer;
+                        transition: opacity 0.3s;
+
+                        &.non-active {
+                            opacity: 0.3;
+                        }
+                    }
                 }
             }
 

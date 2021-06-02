@@ -17,7 +17,10 @@ import evilCatSprite from "./assets/characters/evil-cat-walking-sprite.png";
 import evilCatInfo from "./assets/characters/evil-cat-walking.json";
 
 import backgroundPattern from "./assets/background-ground.png";
-// import po33Sound from "./assets/sound/side_a.mp3";
+import po33Sound1 from "./assets/sound/side-a-optimized.mp3";
+import po33Sound2 from "./assets/sound/side-a1-optimized.mp3";
+import po33Sound3 from "./assets/sound/side-b-optimized.mp3";
+import po33Sound4 from "./assets/sound/side-b2-optimized.mp3";
 
 // import bg1 from "./assets/parallax/parallax-mountain-bg.png";
 import bg1 from "./assets/parallax/test2.png";
@@ -31,6 +34,12 @@ export default function preload() {
     this.load.spritesheet("tiles", tiles, {
         frameWidth: 70,
         frameHeight: 70,
+    });
+
+    this.load.on("complete", function () {
+        document.querySelector("section.loader").style.display = "none";
+        document.querySelector("section.screens").style.display = "block";
+        window.secondsElapsed = 0;
     });
 
     // simple coin image
@@ -57,7 +66,10 @@ export default function preload() {
 
     this.load.image("platform", platformSprite);
 
-    // this.load.audio("po33-sound", po33Sound);
+    this.load.audio("po33-sound1", po33Sound1);
+    this.load.audio("po33-sound2", po33Sound2);
+    this.load.audio("po33-sound3", po33Sound3);
+    this.load.audio("po33-sound", po33Sound4);
 
     window.game.scale.scaleMode = this.scale.RESIZE;
 }

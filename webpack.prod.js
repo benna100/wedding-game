@@ -14,10 +14,10 @@ module.exports = {
     entry: "./src/index.js",
     output: {
         filename: "[name].[hash:20].js",
-        path: buildPath
+        path: buildPath,
     },
     node: {
-        fs: "empty"
+        fs: "empty",
     },
     module: {
         rules: [
@@ -27,8 +27,8 @@ module.exports = {
                 loader: "babel-loader",
 
                 options: {
-                    presets: ["env"]
-                }
+                    presets: ["env"],
+                },
             },
             {
                 test: /\.(scss|css|sass)$/,
@@ -38,15 +38,15 @@ module.exports = {
                             // translates CSS into CommonJS
                             loader: "css-loader",
                             options: {
-                                sourceMap: true
-                            }
+                                sourceMap: true,
+                            },
                         },
                         {
                             // Runs compiled CSS through postcss for vendor prefixing
                             loader: "postcss-loader",
                             options: {
-                                sourceMap: true
-                            }
+                                sourceMap: true,
+                            },
                         },
                         {
                             // compiles Sass to CSS
@@ -54,37 +54,37 @@ module.exports = {
                             options: {
                                 outputStyle: "expanded",
                                 sourceMap: true,
-                                sourceMapContents: true
-                            }
-                        }
+                                sourceMapContents: true,
+                            },
+                        },
                     ],
-                    fallback: "style-loader"
-                })
+                    fallback: "style-loader",
+                }),
             },
             {
                 test: /\.html$/,
-                use: ["html-loader"]
+                use: ["html-loader"],
             },
             {
-                test: /\.(jpg|png|mp3)$/,
+                test: /\.(jpg|png|mp3|gif|svg)$/,
                 use: [
                     {
                         loader: "file-loader",
                         options: {
                             name: "[name].[ext]",
                             outputPath: "assets/",
-                            publicPath: "assets/"
-                        }
-                    }
-                ]
-            }
-        ]
+                            publicPath: "assets/",
+                        },
+                    },
+                ],
+            },
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: "./index.html",
             // Inject the js bundle at the end of the body of the given template
-            inject: "body"
+            inject: "body",
         }),
         new CleanWebpackPlugin(buildPath),
         new FaviconsWebpackPlugin({
@@ -113,24 +113,24 @@ module.exports = {
                 opengraph: false,
                 twitter: false,
                 yandex: false,
-                windows: false
-            }
+                windows: false,
+            },
         }),
         new ExtractTextPlugin("styles.[md5:contenthash:hex:20].css", {
-            allChunks: true
+            allChunks: true,
         }),
         new OptimizeCssAssetsPlugin({
             cssProcessor: require("cssnano"),
             cssProcessorOptions: {
                 map: {
-                    inline: false
+                    inline: false,
                 },
                 zindex: false,
                 discardComments: {
-                    removeAll: true
-                }
+                    removeAll: true,
+                },
             },
-            canPrint: true
+            canPrint: true,
         }),
         new SocialTags({
             appUrl: "https://benna100.github.io/random-parti/",
@@ -143,7 +143,7 @@ module.exports = {
                 "og:description": "Facebook description",
                 "og:site_name": "Your sitename",
                 "og:locale": "da",
-                "og:article:author": "Your name"
+                "og:article:author": "Your name",
             },
             twitter: {
                 "twitter:card": "summary",
@@ -153,8 +153,8 @@ module.exports = {
                     "https://github-username.github.io/your-repo-name/",
                 "twitter:title": "Twitter title",
                 "twitter:description": "Twitter description",
-                "twitter:image": "./src/assets/social.png"
-            }
-        })
-    ]
+                "twitter:image": "./src/assets/social.png",
+            },
+        }),
+    ],
 };

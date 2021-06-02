@@ -6,6 +6,8 @@ const viewportWidth = Math.max(
     window.innerWidth || 0
 );
 
+window.playing = false;
+
 const viewportHeight = Math.max(
     document.documentElement.clientHeight,
     window.innerHeight || 0
@@ -90,7 +92,8 @@ export default function create() {
         : window.player.setScale(1.3);
     window.player.setCollideWorldBounds(true); // don't go out of the map
 
-    const numberOfCats = 20;
+    // 20
+    const numberOfCats = 2;
     for (let i = 0; i < numberOfCats; i++) {
         const x = Phaser.Math.Between(0, 3600);
         const y = Phaser.Math.Between(0, 200);
@@ -110,7 +113,8 @@ export default function create() {
         });
     }
 
-    const numberOfEvilCats = 5;
+    // 5
+    const numberOfEvilCats = 1;
     for (let i = 0; i < numberOfEvilCats; i++) {
         const x = Phaser.Math.Between(0, 3600);
         const y = Phaser.Math.Between(0, 200);
@@ -215,9 +219,17 @@ export default function create() {
     // set background color, so the sky is not black
     this.cameras.main.setBackgroundColor("#c99869");
 
-    // const fx = this.sound.add("po33-sound", { volume: 0.2 });
-    // fx.loop = true;
-    // fx.play();
+    if (!window.playing) {
+        const fx = this.sound.add(`po33-sound${Phaser.Math.Between(1, 4)}`, {
+            volume: 0.2,
+        });
+        fx.loop = true;
+        if (!window.wantSoundOff) {
+            fx.play();
+        }
+
+        window.playing = true;
+    }
 
     const catCounterElement = document.querySelector(".cat-counter p span");
     window.cats.forEach((cat) => {
@@ -226,8 +238,9 @@ export default function create() {
 
             cat.sprite.destroy();
             window.catCounter++;
-            catCounterElement.innerHTML = window.catCounter;
-
+            catCounterElement.innerHTML = `${window.catCounter}/${numberOfCats}`;
+            let that = this;
+            console.log(window.secondsElapsed);
             if (window.catCounter === numberOfCats) {
                 const screens = document.querySelectorAll(
                     "section.screens ul li"
@@ -236,6 +249,8 @@ export default function create() {
                     screens.classList.remove("visible")
                 );
 
+                that.scene.stop();
+
                 document
                     .querySelector(`section.screens ul li.success`)
                     .classList.add("visible");
@@ -243,9 +258,8 @@ export default function create() {
                 window.controlsElement.classList.remove("visible");
 
                 clearInterval(window.interval);
-                document.querySelector(
-                    ".success .time"
-                ).innerHTML = `${window.secondsElapsed} sekunder`;
+                document.querySelector(".success .time").innerHTML =
+                    window.secondsElapsed;
             }
         });
     });
@@ -276,7 +290,6 @@ export default function create() {
                 document
                     .querySelector("li.you-died button")
                     .addEventListener("click", () => {
-                        console.log("clicked");
                         that.scene.restart();
                         window.catCounter = 0;
                         window.secondsElapsed = 0;

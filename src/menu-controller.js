@@ -4,6 +4,11 @@ import preload from "./preload";
 import gameCreator from "./game-creator";
 import update from "./update";
 
+import po33Sound1 from "./assets/sound/side-a-optimized.mp3";
+import po33Sound2 from "./assets/sound/side-a1-optimized.mp3";
+import po33Sound3 from "./assets/sound/side-b-optimized.mp3";
+import po33Sound4 from "./assets/sound/side-b2-optimized.mp3";
+
 import "./style/main.scss";
 
 const viewportWidth = Math.max(
@@ -41,6 +46,8 @@ const config = {
         update: update,
     },
 };
+
+const headphoneElement = document.querySelector(".headphone");
 
 export default function () {
     let mainMenuActiveButtonIndex = 0;
@@ -97,17 +104,7 @@ export default function () {
         } else if (e.keyCode == "13") {
             // enter key
             if (selectCharacter.classList.contains("visible")) {
-                showScreen("game");
-
-                window.controlsElement.classList.add("visible");
-
-                if (characterSelectIndex === 0) {
-                    window.playerConfiguration.player = "mads";
-                } else if (characterSelectIndex === 1) {
-                    window.playerConfiguration.player = "amanda";
-                }
-                console.log(window.playerConfiguration.player);
-                window.game = new Phaser.Game(config);
+                startGame(characterSelectIndex === 0);
             }
 
             if (
@@ -139,26 +136,7 @@ export default function () {
 
     selectCharacterButtons.forEach((characterButton) => {
         characterButton.addEventListener("click", (evt) => {
-            showScreen("game");
-            window.controlsElement.classList.add("visible");
-
-            if ([...evt.target.classList].indexOf("mads") >= 0) {
-                window.playerConfiguration.player = "mads";
-            } else if (characterSelectIndex === 1) {
-                window.playerConfiguration.player = "amanda";
-            }
-
-            window.game = new Phaser.Game(config);
-
-            window.secondsElapsed = 0;
-            const timerElement = document.querySelector(".timer");
-
-            try {
-                window.interval = setInterval(() => {
-                    window.secondsElapsed++;
-                    timerElement.innerHTML = `${window.secondsElapsed} sekunder`;
-                }, 1000);
-            } catch (error) {}
+            startGame([...evt.target.classList].indexOf("mads") >= 0);
         });
     });
 }
@@ -176,3 +154,36 @@ function showScreen(screenId) {
         .querySelector(`section.screens ul li.${screenId}`)
         .classList.add("visible");
 }
+
+function startGame(isMads) {
+    showScreen("game");
+    window.controlsElement.classList.add("visible");
+
+    if (isMads) {
+        window.playerConfiguration.player = "mads";
+    } else {
+        window.playerConfiguration.player = "amanda";
+    }
+
+    window.game = new Phaser.Game(config);
+
+    console.log(window.game);
+
+    window.secondsElapsed = 0;
+    const timerElement = document.querySelector(".timer");
+    window.interval = setInterval(() => {
+        window.secondsElapsed++;
+        timerElement.innerHTML = `${window.secondsElapsed} sekunder`;
+    }, 1000);
+
+    window.wantSoundOff = headphoneElement.classList.contains("non-active");
+
+    document.querySelector("section.loader").style.display = "flex";
+    document.querySelector("section.screens").style.display = "none";
+
+    document.querySelector("section.loader .loading").classList.add("visible");
+}
+
+headphoneElement.addEventListener("click", () => {
+    headphoneElement.classList.toggle("non-active");
+});
