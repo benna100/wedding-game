@@ -2,5 +2,6 @@
 - Background
 - Cats
 - Os to i grafik
-- tillykke
-- mads gif selector
+- stor ond kat
+- ios too large height
+- bushes and trees not great on mobile

@@ -29,6 +29,7 @@ body {
     top: 66px;
     right: 24px;
     font-size: 2rem;
+    -webkit-user-select: none;
     color: white;
 }
 
@@ -283,6 +284,7 @@ section.screens {
 
 section.controls {
     display: none;
+    -webkit-user-select: none;
 
     &.visible {
         display: block;
@@ -307,6 +309,7 @@ section.controls {
         justify-content: center;
         user-select: none;
         -webkit-touch-callout: none;
+        -webkit-user-select: none;
     }
 
     ul.controls li:nth-child(1),
