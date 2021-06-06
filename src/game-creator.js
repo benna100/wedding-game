@@ -140,6 +140,8 @@ export default function create() {
             direction: Phaser.Math.Between(0, 1) === 0 ? "left" : "right",
             speed: Phaser.Math.Between(150, 220),
         });
+        console.log(window.evilCats);
+        window.evilCats[window.evilCats.length - 1].sprite.body.offset.y = 22;
     }
 
     // player will collide with the level tiles
@@ -235,8 +237,9 @@ export default function create() {
                     loop: true,
                     volume: 0.5,
                 });
-
-                sound.play();
+                if (!window.wantSoundOff) {
+                    sound.play();
+                }
                 break;
             case 2:
                 var sound = new Howl({
@@ -245,7 +248,9 @@ export default function create() {
                     volume: 0.5,
                 });
 
-                sound.play();
+                if (!window.wantSoundOff) {
+                    sound.play();
+                }
                 break;
             case 3:
                 var sound = new Howl({
@@ -254,7 +259,9 @@ export default function create() {
                     volume: 0.5,
                 });
 
-                sound.play();
+                if (!window.wantSoundOff) {
+                    sound.play();
+                }
                 break;
             case 4:
                 var sound = new Howl({
@@ -263,12 +270,15 @@ export default function create() {
                     volume: 0.5,
                 });
 
-                sound.play();
+                if (!window.wantSoundOff) {
+                    sound.play();
+                }
                 break;
             default:
                 break;
         }
     }
+    window.playing = true;
 
     const catCounterElement = document.querySelector(".cat-counter p span");
     window.cats.forEach((cat) => {
