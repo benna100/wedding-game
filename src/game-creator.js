@@ -101,7 +101,7 @@ export default function create() {
     window.player.setCollideWorldBounds(true); // don't go out of the map
 
     // 20
-    const numberOfCats = 2;
+    const numberOfCats = 30;
     for (let i = 0; i < numberOfCats; i++) {
         const x = Phaser.Math.Between(0, 3600);
         const y = Phaser.Math.Between(0, 200);
@@ -122,7 +122,8 @@ export default function create() {
     }
 
     // 5
-    const numberOfEvilCats = 1;
+    window.evilCats = [];
+    const numberOfEvilCats = 9;
     for (let i = 0; i < numberOfEvilCats; i++) {
         const x = Phaser.Math.Between(0, 3600);
         const y = Phaser.Math.Between(0, 200);
@@ -140,8 +141,10 @@ export default function create() {
             direction: Phaser.Math.Between(0, 1) === 0 ? "left" : "right",
             speed: Phaser.Math.Between(150, 220),
         });
-        console.log(window.evilCats);
-        window.evilCats[window.evilCats.length - 1].sprite.body.offset.y = 22;
+
+        window.evilCats.forEach((cat) => {
+            cat.sprite.body.offset.y = 22;
+        });
     }
 
     // player will collide with the level tiles
@@ -228,7 +231,8 @@ export default function create() {
 
     // set background color, so the sky is not black
     this.cameras.main.setBackgroundColor("#c99869");
-
+    // this.cameras.main.setViewport(0, 0, viewportWidth * 2, viewportHeight * 2);
+    this.cameras.main.zoomTo(0.9);
     if (!window.playing) {
         switch (Phaser.Math.Between(1, 4)) {
             case 1:
@@ -289,7 +293,7 @@ export default function create() {
             window.catCounter++;
             catCounterElement.innerHTML = `${window.catCounter}/${numberOfCats}`;
             let that = this;
-            console.log(window.secondsElapsed);
+
             if (window.catCounter === numberOfCats) {
                 const screens = document.querySelectorAll(
                     "section.screens ul li"

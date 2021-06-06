@@ -88,7 +88,7 @@ export default function update(time, delta) {
         this.cameras.cameras[0].scrollY * 0.2;
 
     // console.log(window.player.body);
-    const speed = window.playerConfiguration.player === "mads" ? 350 : 400;
+    const speed = 400;
     if (window.cursors.left.isDown || leftTouchDown) {
         // setFriction setDrag
         window.player.body.setVelocityX(-speed);
