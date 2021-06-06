@@ -4,11 +4,6 @@ import preload from "./preload";
 import gameCreator from "./game-creator";
 import update from "./update";
 
-import po33Sound1 from "./assets/sound/side-a-optimized.mp3";
-import po33Sound2 from "./assets/sound/side-a1-optimized.mp3";
-import po33Sound3 from "./assets/sound/side-b-optimized.mp3";
-import po33Sound4 from "./assets/sound/side-b2-optimized.mp3";
-
 import "./style/main.scss";
 
 const viewportWidth = Math.max(

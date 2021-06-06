@@ -1,6 +1,14 @@
 import addParallax from "./parallax";
 import { LEFT } from "phaser";
 
+var audio = require("browser-audio");
+
+import po33Sound1 from "./assets/sound/side-a-optimized.mp3";
+import po33Sound2 from "./assets/sound/side-a1-optimized.mp3";
+import po33Sound3 from "./assets/sound/side-b-optimized.mp3";
+import po33Sound4 from "./assets/sound/side-b2-optimized.mp3";
+import { Howl, Howler } from "howler";
+
 const viewportWidth = Math.max(
     document.documentElement.clientWidth,
     window.innerWidth || 0
@@ -128,7 +136,7 @@ export default function create() {
                     y,
                 },
                 { width: 51.5, height: 45.5 }
-            ),
+            ).setScale(1.1),
             direction: Phaser.Math.Between(0, 1) === 0 ? "left" : "right",
             speed: Phaser.Math.Between(150, 220),
         });
@@ -220,16 +228,46 @@ export default function create() {
     this.cameras.main.setBackgroundColor("#c99869");
 
     if (!window.playing) {
-        console.log(`po33-sound${Phaser.Math.Between(1, 4)}`);
-        const fx = this.sound.add(`po33-sound${Phaser.Math.Between(1, 4)}`, {
-            volume: 0.2,
-        });
-        fx.loop = true;
-        if (!window.wantSoundOff) {
-            fx.play();
-        }
+        switch (Phaser.Math.Between(1, 4)) {
+            case 1:
+                var sound = new Howl({
+                    src: [po33Sound1],
+                    loop: true,
+                    volume: 0.5,
+                });
 
-        window.playing = true;
+                sound.play();
+                break;
+            case 2:
+                var sound = new Howl({
+                    src: [po33Sound2],
+                    loop: true,
+                    volume: 0.5,
+                });
+
+                sound.play();
+                break;
+            case 3:
+                var sound = new Howl({
+                    src: [po33Sound3],
+                    loop: true,
+                    volume: 0.5,
+                });
+
+                sound.play();
+                break;
+            case 4:
+                var sound = new Howl({
+                    src: [po33Sound4],
+                    loop: true,
+                    volume: 0.5,
+                });
+
+                sound.play();
+                break;
+            default:
+                break;
+        }
     }
 
     const catCounterElement = document.querySelector(".cat-counter p span");

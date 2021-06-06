@@ -31,7 +31,7 @@ export default function (scene) {
 
     scene.parallaxMountainForegroundTrees = scene.add.tileSprite(
         0,
-        400,
+        0,
         scene.textures.list["parallax-mountain-foreground-trees"].source[0]
             .width,
         scene.textures.list["parallax-mountain-foreground-trees"].source[0]
@@ -47,6 +47,6 @@ export default function (scene) {
         backgroundSizeForParallax /
             scene.textures.list["parallax-mountain-foreground-trees"].source[0]
                 .height /
-            2.3
+            1.4
     );
 }
