@@ -1,3 +1,4 @@
 - ios too large height
 - Zoom ud
 - mobil begge to animere
+- mads animation sidste
