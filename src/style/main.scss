@@ -1,7 +1,15 @@
 @import "../../node_modules/css-reset-and-normalize/scss/reset-and-normalize.scss";
 
+:root {
+    --app-height: 100%;
+}
+
 html {
     overflow-y: hidden;
+    // max-height: 100px;
+    &.is-ios body section.screens {
+        height: calc(100vh - 100px) !important;
+    }
 }
 
 body {
@@ -9,11 +17,21 @@ body {
     position: relative;
     font-family: Open Sans, sans-serif;
     transition: transform 0.3s;
-    min-height: calc(100vh);
+    // max-height: 100px;
 
     &.rotate {
         transform: rotate(180deg);
     }
+}
+
+body,
+html {
+    width: 100vw;
+    height: 100vh;
+    height: var(--app-height);
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
 }
 
 .cat-counter {
@@ -50,7 +68,6 @@ section.loader {
 
 section.screens {
     width: 100%;
-
     height: 100vh;
     position: absolute;
     left: 0;
@@ -161,9 +178,14 @@ section.screens {
                         border: solid transparent 5px;
                         transition: border 0.15s;
 
+                        @media only screen and (max-device-width: 700px) {
+                            border: solid grey 1px;
+                        }
                         &.active,
                         &:hover {
-                            border: solid #e14242 5px;
+                            @media only screen and (min-device-width: 700px) {
+                                border: solid #e14242 5px;
+                            }
 
                             .player {
                                 background-image: url("./../assets/characters/amanda-walking.gif");
@@ -194,11 +216,18 @@ section.screens {
 
                             &.mads {
                                 background-image: url("./../assets/characters/mads-static.png");
-                                // height: 211px;
+
+                                @media only screen and (max-device-width: 700px) {
+                                    background-image: url("./../assets/characters/mads-walking.gif");
+                                }
                             }
 
                             &.player {
                                 background-image: url("./../assets/characters/amanda-static.png");
+
+                                @media only screen and (max-device-width: 700px) {
+                                    background-image: url("./../assets/characters/amanda-walking.gif");
+                                }
                             }
                         }
                     }

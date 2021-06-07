@@ -123,7 +123,7 @@
         </style>
 
         <!-- Primary Meta Tags -->
-        <title>Page title</title>
+        <title>Mads og Amandas Bryllups spil</title>
     </head>
 
     <body>
@@ -216,5 +216,36 @@
                 <li class="jump">Hop</li>
             </ul>
         </section>
+
+        <script>
+            function isIOS() {
+                return (
+                    [
+                        "iPad Simulator",
+                        "iPhone Simulator",
+                        "iPod Simulator",
+                        "iPad",
+                        "iPhone",
+                        "iPod",
+                    ].includes(navigator.platform) ||
+                    // iPad on iOS 13 detection
+                    (navigator.userAgent.includes("Mac") &&
+                        "ontouchend" in document)
+                );
+            }
+
+            if (isIOS()) {
+                document.querySelector("html").classList.add("is-ios");
+                const appHeight = () => {
+                    const doc = document.documentElement;
+                    doc.style.setProperty(
+                        "--app-height",
+                        `${window.innerHeight}px`
+                    );
+                };
+                window.addEventListener("resize", appHeight);
+                appHeight();
+            }
+        </script>
     </body>
 </html>

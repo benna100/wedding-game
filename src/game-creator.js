@@ -123,7 +123,7 @@ export default function create() {
 
     // 5
     window.evilCats = [];
-    const numberOfEvilCats = 9;
+    const numberOfEvilCats = 8;
     for (let i = 0; i < numberOfEvilCats; i++) {
         const x = Phaser.Math.Between(0, 3600);
         const y = Phaser.Math.Between(0, 200);
@@ -232,7 +232,10 @@ export default function create() {
     // set background color, so the sky is not black
     this.cameras.main.setBackgroundColor("#c99869");
     // this.cameras.main.setViewport(0, 0, viewportWidth * 2, viewportHeight * 2);
-    this.cameras.main.zoomTo(0.9);
+    if (viewportWidth < 700) {
+        this.cameras.main.zoomTo(0.8);
+    }
+
     if (!window.playing) {
         switch (Phaser.Math.Between(1, 4)) {
             case 1:

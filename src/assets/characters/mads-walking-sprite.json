@@ -18,7 +18,7 @@
         },
         {
             "filename": "sprite3",
-            "frame": { "x": 0, "y": 182, "w": 52, "h": 88 },
+            "frame": { "x": 0, "y": 183, "w": 52, "h": 88 },
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": { "x": 0, "y": 0, "w": 52, "h": 83 },
