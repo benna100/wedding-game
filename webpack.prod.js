@@ -133,26 +133,29 @@ module.exports = {
             canPrint: true,
         }),
         new SocialTags({
-            appUrl: "https://benna100.github.io/random-parti/",
+            appUrl: "https://benna100.github.io/wedding-game/",
             facebook: {
                 "fb:app_id": "123456789",
-                "og:url": "https://github-username.github.io/your-repo-name/",
+                "og:url": "https://benna100.github.io/wedding-game/",
                 "og:type": "website",
-                "og:title": "Facebook title",
+                "og:title": "Mads og Amandas Bryllupsspil",
                 "og:image": "./src/assets/social.png",
-                "og:description": "Facebook description",
-                "og:site_name": "Your sitename",
+                "og:description":
+                    "Prøv Mads og Amandas Bryllupsspil - Det er helt gratis!",
+                "og:site_name": "Mads og Amandas Bryllupsspil",
                 "og:locale": "da",
-                "og:article:author": "Your name",
+                "og:article:author":
+                    "Benjamin Hughes, Nanna Cecilie Egede Andersen",
             },
             twitter: {
-                "twitter:card": "summary",
+                "twitter:card":
+                    "Prøv Mads og Amandas Bryllupsspil - Det er helt gratis!",
                 "twitter:site": "@site_account",
-                "twitter:creator": "@twitterhandle",
-                "twitter:url":
-                    "https://github-username.github.io/your-repo-name/",
-                "twitter:title": "Twitter title",
-                "twitter:description": "Twitter description",
+                "twitter:creator": "@dalshughes",
+                "twitter:url": "https://benna100.github.io/wedding-game/",
+                "twitter:title": "Mads og Amandas Bryllupsspil",
+                "twitter:description":
+                    "Prøv Mads og Amandas Bryllupsspil - Det er helt gratis!",
                 "twitter:image": "./src/assets/social.png",
             },
         }),
