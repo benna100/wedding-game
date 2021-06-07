@@ -138,24 +138,24 @@ module.exports = {
                 "fb:app_id": "123456789",
                 "og:url": "https://benna100.github.io/wedding-game/",
                 "og:type": "website",
-                "og:title": "Mads og Amandas Bryllupsspil",
+                "og:title": "Mads og Amanda's Bryllupsspil",
                 "og:image": "./src/assets/social.png",
                 "og:description":
-                    "Prøv Mads og Amandas Bryllupsspil - Det er helt gratis!",
-                "og:site_name": "Mads og Amandas Bryllupsspil",
+                    "Prøv Mads og Amanda's Bryllupsspil - Det er helt gratis!",
+                "og:site_name": "Mads og Amanda's Bryllupsspil",
                 "og:locale": "da",
                 "og:article:author":
                     "Benjamin Hughes, Nanna Cecilie Egede Andersen",
             },
             twitter: {
                 "twitter:card":
-                    "Prøv Mads og Amandas Bryllupsspil - Det er helt gratis!",
+                    "Prøv Mads og Amanda's Bryllupsspil - Det er helt gratis!",
                 "twitter:site": "@site_account",
                 "twitter:creator": "@dalshughes",
                 "twitter:url": "https://benna100.github.io/wedding-game/",
-                "twitter:title": "Mads og Amandas Bryllupsspil",
+                "twitter:title": "Mads og Amanda's Bryllupsspil",
                 "twitter:description":
-                    "Prøv Mads og Amandas Bryllupsspil - Det er helt gratis!",
+                    "Prøv Mads og Amanda's Bryllupsspil - Det er helt gratis!",
                 "twitter:image": "./src/assets/social.png",
             },
         }),
