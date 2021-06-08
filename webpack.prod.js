@@ -9,6 +9,11 @@ const SocialTags = require("social-tags-webpack-plugin");
 
 const buildPath = path.resolve(__dirname, "dist");
 
+const appUrl = "https://benna100.github.io/wedding-game/";
+const appTitle = "Mads og Amanda's Bryllupsspil";
+const appDescription =
+    "Prøv Mads og Amanda's Bryllupsspil - Det er helt gratis!";
+
 module.exports = {
     devtool: "source-map",
     entry: "./src/index.js",
@@ -133,30 +138,26 @@ module.exports = {
             canPrint: true,
         }),
         new SocialTags({
-            appUrl: "https://benna100.github.io/wedding-game/",
+            appUrl: appUrl,
             facebook: {
                 "fb:app_id": "123456789",
-                "og:url": "https://benna100.github.io/wedding-game/",
+                "og:url": appUrl,
                 "og:type": "website",
-                "og:title": "Mads og Amanda's Bryllupsspil",
-                "og:image": "./src/assets/social.png",
-                "og:description":
-                    "Prøv Mads og Amanda's Bryllupsspil - Det er helt gratis!",
-                "og:site_name": "Mads og Amanda's Bryllupsspil",
+                "og:title": appTitle,
+                "og:image": "./src/assets/social-facebook-image.png",
+                "og:description": appDescription,
+                "og:site_name": appTitle,
                 "og:locale": "da",
-                "og:article:author":
-                    "Benjamin Hughes, Nanna Cecilie Egede Andersen",
+                "og:article:author": "Your name",
             },
             twitter: {
-                "twitter:card":
-                    "Prøv Mads og Amanda's Bryllupsspil - Det er helt gratis!",
+                "twitter:card": "summary_large_image",
                 "twitter:site": "@site_account",
-                "twitter:creator": "@dalshughes",
-                "twitter:url": "https://benna100.github.io/wedding-game/",
-                "twitter:title": "Mads og Amanda's Bryllupsspil",
-                "twitter:description":
-                    "Prøv Mads og Amanda's Bryllupsspil - Det er helt gratis!",
-                "twitter:image": "./src/assets/social.png",
+                "twitter:creator": "@twitterhandle",
+                "twitter:url": appUrl,
+                "twitter:title": appTitle,
+                "twitter:description": appDescription,
+                "twitter:image": "./src/assets/social-twitter.png",
             },
         }),
     ],
