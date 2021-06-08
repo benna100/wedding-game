@@ -144,7 +144,7 @@ module.exports = {
                 "og:url": appUrl,
                 "og:type": "website",
                 "og:title": appTitle,
-                "og:image": "./src/assets/social-facebook-image.png",
+                "og:image": "./src/assets/social-facebook.png",
                 "og:description": appDescription,
                 "og:site_name": appTitle,
                 "og:locale": "da",
