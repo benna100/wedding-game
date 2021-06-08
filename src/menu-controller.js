@@ -59,6 +59,8 @@ export default function () {
         "section.screens > ul > li.select-character ul > li"
     );
 
+    const youDied = document.querySelector("section.screens ul li.you-died");
+
     window.controlsElement = document.querySelector("section.controls");
 
     document.onkeydown = checkKey;
@@ -107,6 +109,10 @@ export default function () {
                 mainMenuActiveButtonIndex === 0
             ) {
                 showScreen("select-character");
+            }
+
+            if (youDied.classList.contains("visible")) {
+                window.youDied();
             }
         }
 

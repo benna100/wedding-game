@@ -320,19 +320,18 @@ export default function create() {
         });
     });
 
+    window.screens = document.querySelectorAll("section.screens ul li");
+
     let once = false;
     window.evilCats.forEach((evilCat) => {
         this.physics.add.overlap(window.player, evilCat.sprite, (lol) => {
             // shoulde remove the overlapped evilCat from the window.cats array
             // all aboard the badpractice train choo choo 🚂☁☁☁☁☁☁☁
-            const that = this;
+            window.that = this;
             // window.location.reload();
             // this.registry.destroy();
             // this.events.off();
             if (!once) {
-                const screens = document.querySelectorAll(
-                    "section.screens ul li"
-                );
                 screens.forEach((screens) =>
                     screens.classList.remove("visible")
                 );
@@ -346,24 +345,22 @@ export default function create() {
                 document
                     .querySelector("li.you-died button")
                     .addEventListener("click", () => {
-                        that.scene.restart();
-                        window.catCounter = 0;
-                        window.secondsElapsed = 0;
-
-                        screens.forEach((screens) =>
-                            screens.classList.remove("visible")
-                        );
-
-                        window.controlsElement.classList.add("visible");
-
-                        console.log(
-                            document.querySelector(
-                                `section.screens ul li.level-1-intro`
-                            )
-                        );
+                        window.youDied();
                     });
                 once = true;
             }
         });
     });
 }
+
+window.youDied = function (that) {
+    // 🙈
+    // Forgive me god for i have sinned
+    window.that.scene.restart();
+    window.catCounter = 0;
+    window.secondsElapsed = 0;
+    // 🙈
+    window.screens.forEach((screens) => screens.classList.remove("visible"));
+
+    window.controlsElement.classList.add("visible");
+};
