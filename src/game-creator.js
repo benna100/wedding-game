@@ -96,7 +96,7 @@ export default function create() {
     window.player = this.physics.add.sprite(200, 200, "player");
 
     window.playerConfiguration.player === "mads"
-        ? window.player.setScale(1.6)
+        ? window.player.setScale(1.5)
         : window.player.setScale(1.3);
     window.player.setCollideWorldBounds(true); // don't go out of the map
 
