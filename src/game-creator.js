@@ -123,7 +123,7 @@ export default function create() {
 
     // 5
     window.evilCats = [];
-    const numberOfEvilCats = 7;
+    const numberOfEvilCats = 6;
     for (let i = 0; i < numberOfEvilCats; i++) {
         const x = Phaser.Math.Between(0, 3600);
         const y = Phaser.Math.Between(0, 200);
